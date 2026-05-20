@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import PasswordGate from "@/components/ui/PasswordGate";
 
 const BLUE = "#38bdf8";
 const BLUE_DIM = "rgba(56,189,248,0.15)";
@@ -27,18 +27,21 @@ const PILLARS = [
     name: "Member Medical Profile (MMP)",
     body: "The center of gravity. Care managers searched by Member ID, Contract ID, SSN, or CSA/CSF to access a comprehensive profile: demographics, eligibility, active alerts, referrals, and program enrollments — all stacked vertically with a dense left-nav pane. The data was valuable. The presentation was a wall. When a nurse is mid-call needing a referral status, comprehensive and usable aren't the same thing.",
     color: BLUE,
+    img: "/work/BCBSA/pillar%201.jpeg",
   },
   {
     number: "02",
     name: "Care Coordination Directory",
     body: "A lookup directory, not a workflow. When users needed to find the right contact at a specific plan — who owns which program, which vendor handles what — they came here. Structurally simpler than the other two pillars, but critical for coordinating across organizations.",
     color: "#a78bfa",
+    img: null,
   },
   {
     number: "03",
     name: "Plan Rosters & Reports (PRR)",
     body: "The operational backbone — and the biggest UX challenge. This is where population-level decisions began: scanning referral rosters, reviewing program enrollments, spotting alert patterns, tracking wellness engagement. Four core sections (Program Referrals, Programs, Alerts, Wellness), each with deep drill-down paths and complex multi-dimensional filtering. Classic Cognos thinking: report first, decision later.",
     color: "#34d399",
+    imgs: ["/work/BCBSA/pillar%203.1.png", "/work/BCBSA/pillar%203.2.png"],
   },
 ];
 
@@ -61,12 +64,6 @@ const FINDINGS = [
 ];
 
 const DECISIONS = [
-  {
-    number: "01",
-    title: "Fixing the Information Hierarchy",
-    color: BLUE,
-    body: "The most important design problem. In the old system, every piece of information competed equally. In CC360, we made deliberate choices. On the member profile, actionable data (active alerts, referral statuses) became immediately visible. Supporting context (eligibility details, program history, demographics) stayed accessible but no longer competed for the same visual real estate. A care manager could instantly see what needed attention instead of scanning through everything.",
-  },
   {
     number: "02",
     title: "Cleaning the Data",
@@ -111,13 +108,14 @@ const LEARNINGS = [
 ];
 
 const NAV_SECTIONS = [
-  { id: "overview",  label: "Overview" },
-  { id: "problem",   label: "Problem" },
-  { id: "system",    label: "The System" },
-  { id: "findings",  label: "What I Found" },
-  { id: "approach",  label: "Approach" },
-  { id: "decisions", label: "Key Decisions" },
-  { id: "learnings", label: "Key Learnings" },
+  { id: "overview",    label: "Overview" },
+  { id: "problem",     label: "Problem" },
+  { id: "constraints", label: "Constraints" },
+  { id: "system",      label: "The System" },
+  { id: "findings",    label: "What I Found" },
+  { id: "approach",    label: "Approach" },
+  { id: "decisions",   label: "Key Decisions" },
+  { id: "learnings",   label: "Key Learnings" },
 ];
 
 function StatCounter({ value, suffix }: { value: number; suffix: string }) {
@@ -150,8 +148,9 @@ function StatCounter({ value, suffix }: { value: number; suffix: string }) {
   return <span ref={ref}>{display}{suffix}</span>;
 }
 
-export default function BCBSACase() {
+function BCBSAContent() {
   const [activeSection, setActiveSection] = useState("overview");
+  const isScrolling = useRef(false);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -159,8 +158,8 @@ export default function BCBSACase() {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
-        ([e]) => { if (e.isIntersecting) setActiveSection(id); },
-        { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+        ([e]) => { if (e.isIntersecting && !isScrolling.current) setActiveSection(id); },
+        { rootMargin: "-5% 0px -70% 0px", threshold: 0 }
       );
       obs.observe(el);
       observers.push(obs);
@@ -169,7 +168,10 @@ export default function BCBSACase() {
   }, []);
 
   const scrollTo = (id: string) => {
+    setActiveSection(id);
+    isScrolling.current = true;
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => { isScrolling.current = false; }, 900);
   };
 
   return (
@@ -181,7 +183,10 @@ export default function BCBSACase() {
 
       {/* ── Navbar ── */}
       <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, background: "rgba(10,10,10,0.92)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${BLUE_DIM}`, padding: "0 24px", height: "56px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Link href="/" style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, textDecoration: "none", letterSpacing: "1px" }}>← BACK</Link>
+        <a href="/#work" style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, textDecoration: "none", letterSpacing: "1px", display: "inline-grid", gridAutoFlow: "column", alignItems: "center", gap: "6px" }}>
+          <span style={{ display: "block", lineHeight: "1", fontSize: "14px", transform: "translateY(-4px)" }}>←</span>
+          <span style={{ display: "block", lineHeight: "1" }}>BACK</span>
+        </a>
         <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: `rgba(56,189,248,0.4)`, letterSpacing: "3px" }}>BCBSA — CASE STUDY</span>
         <div style={{ width: "80px" }} />
       </nav>
@@ -231,23 +236,11 @@ export default function BCBSACase() {
         </div>
       </section>
 
-      {/* ── Hero Images ── */}
-      <div style={{ padding: "0 24px 64px", borderBottom: `1px solid ${BLUE_DIM}` }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "0.7fr 1fr", gap: "12px", paddingTop: "48px" }}>
-          <div style={{ borderRadius: "6px", overflow: "hidden", border: `1px solid ${BLUE_DIM}` }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/work/bcbsa/BCBSA.jpeg" alt="BCBSA Poster" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <div style={{ borderRadius: "6px", overflow: "hidden", border: `1px solid ${BLUE_DIM}`, flex: 1 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/work/bcbsa/report.jpeg" alt="Report View" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-            </div>
-            <div style={{ borderRadius: "6px", overflow: "hidden", border: `1px solid ${BLUE_DIM}`, flex: 1 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/work/bcbsa/portal.jpeg" alt="Portal View" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-            </div>
-          </div>
+      {/* ── Hero Image ── */}
+      <div style={{ padding: "48px 24px 64px", borderBottom: `1px solid ${BLUE_DIM}` }}>
+        <div style={{ maxWidth: "600px", margin: "0 auto", borderRadius: "6px", overflow: "hidden", border: `1px solid ${BLUE_DIM}` }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/work/BCBSA/hero.jpeg" alt="BCBSA Hero" style={{ width: "100%", display: "block" }} />
         </div>
       </div>
 
@@ -278,26 +271,22 @@ export default function BCBSACase() {
 
       {/* ── Overview ── */}
       <section id="overview" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)`, background: "#0d0d0d" }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "64px", alignItems: "start" }}>
-          <div>
-            <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "20px" }}>OVERVIEW</div>
-            <div style={{ height: "2px", width: "40px", background: BLUE, marginBottom: "20px", opacity: 0.4 }} />
-            <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(255,255,255,0.3)", letterSpacing: "1.5px", lineHeight: "2.4" }}>
-              A DECADE-OLD SYSTEM.<br />MISSION-CRITICAL.<br />BUCKLING UNDER<br />ITS OWN WEIGHT.
-            </div>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "28px" }}>OVERVIEW</div>
+          <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "16px", color: "rgba(255,255,255,0.7)", lineHeight: "1.9", marginBottom: "20px", maxWidth: "760px" }}>
+            The Care Coordination Portal is a mission-critical enterprise system used across the Federal Employee Program by case managers, disease managers, analysts, and plan administrators. It's not one screen — it's a multi-tab, role-based platform where population-level decisions start and individual patient care gets coordinated.
+          </p>
+          <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "16px", color: "rgba(255,255,255,0.7)", lineHeight: "1.9", marginBottom: "28px", maxWidth: "760px" }}>
+            It had been running for over a decade, and it was buckling under its own weight. I was brought on to help redesign the experience as part of <strong style={{ color: BLUE }}>CC360</strong> — a six-phase ground-up redevelopment rethinking workflows across all three pillars while making sure nothing that mattered got lost in translation.
+          </p>
+          <div style={{ padding: "20px 24px", background: `rgba(56,189,248,0.05)`, border: `1px solid ${BLUE_DIM}`, borderRadius: "4px", marginBottom: "36px", maxWidth: "760px" }}>
+            <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "14px", color: "rgba(255,255,255,0.5)", lineHeight: "1.8", margin: 0, fontStyle: "italic" }}>
+              Note: Final designs are under NDA. This case study covers research methodology, design thinking, and outcome metrics without exposing proprietary UI.
+            </p>
           </div>
-          <div>
-            <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "16px", color: "rgba(255,255,255,0.7)", lineHeight: "1.9", marginBottom: "24px" }}>
-              The Care Coordination Portal is a mission-critical enterprise system used across the Federal Employee Program by case managers, disease managers, analysts, and plan administrators. It's not one screen — it's a multi-tab, role-based platform where population-level decisions start and individual patient care gets coordinated.
-            </p>
-            <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "16px", color: "rgba(255,255,255,0.7)", lineHeight: "1.9", marginBottom: "24px" }}>
-              It had been running for over a decade, and it was buckling under its own weight. I was brought on to help redesign the experience as part of <strong style={{ color: BLUE }}>CC360</strong> — a six-phase ground-up redevelopment rethinking workflows across all three pillars while making sure nothing that mattered got lost in translation.
-            </p>
-            <div style={{ padding: "20px 24px", background: `rgba(56,189,248,0.05)`, border: `1px solid ${BLUE_DIM}`, borderRadius: "4px" }}>
-              <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "14px", color: "rgba(255,255,255,0.5)", lineHeight: "1.8", margin: 0, fontStyle: "italic" }}>
-                Note: Final designs are under NDA. This case study covers research methodology, design thinking, and outcome metrics without exposing proprietary UI.
-              </p>
-            </div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/work/BCBSA/overview.jpeg" alt="Overview" style={{ maxWidth: "760px", width: "100%", borderRadius: "6px", border: `1px solid ${BLUE_DIM}`, display: "block" }} />
           </div>
         </div>
       </section>
@@ -310,6 +299,9 @@ export default function BCBSACase() {
           <blockquote style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "clamp(16px,2.2vw,22px)", color: "rgba(255,255,255,0.8)", lineHeight: "1.75", borderLeft: `4px solid ${BLUE}`, paddingLeft: "28px", margin: "0 0 48px", fontStyle: "italic" }}>
             "My first week, I got an email with four user guide documents attached. They totaled 26 MB. When you need 26 MB of documentation to explain how to use a tool, the tool has a problem."
           </blockquote>
+
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/work/BCBSA/file%20transfer.gif" alt="File transfer animation" style={{ width: "420px", borderRadius: "8px", marginBottom: "40px", display: "block", margin: "0 auto 40px" }} />
 
           <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.6)", lineHeight: "1.9", maxWidth: "740px", marginBottom: "40px" }}>
             But here's the thing: CCP wasn't broken. It was working. Thousands of plan staff across the BCBS system depended on it every day. Nurses used it mid-call to pull up alert histories. Analysts scanned populations for trends. Plan administrators tracked referral volumes. If CCP went down, real patient care was delayed.
@@ -337,10 +329,57 @@ export default function BCBSACase() {
         </div>
       </section>
 
+      {/* ── Constraints & Goal ── */}
+      <section id="constraints" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)`, background: "#0d0d0d" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px" }}>
+          {/* Constraints */}
+          <div>
+            <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "28px" }}>CONSTRAINTS</div>
+            <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "14px", color: "rgba(255,255,255,0.5)", lineHeight: "1.85", marginBottom: "24px" }}>
+              CCP supported multiple high-stakes workflows that could not be disrupted or degraded during the transition:
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {[
+                "Member-level clinical lookups",
+                "Care coordination and referral tracking",
+                "Plan-level and program-level reporting",
+                "Administrative and compliance reporting",
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "12px", padding: "14px 18px", background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "4px" }}>
+                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: BLUE, flexShrink: 0, marginTop: "5px" }} />
+                  <span style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "13px", color: "rgba(255,255,255,0.65)", lineHeight: "1.6" }}>{item}</span>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "13px", color: "rgba(255,255,255,0.4)", lineHeight: "1.85", marginTop: "20px" }}>
+              Users frequently moved across tabs and sections to complete a single task. Performance bottlenecks — often tied to ETL schedules and data dependencies — made even routine actions feel slow and mentally taxing.
+            </p>
+          </div>
+
+          {/* Goal */}
+          <div>
+            <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "28px" }}>GOAL</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {[
+                { icon: "⚡", label: "Improve speed and clarity" },
+                { icon: "🧠", label: "Reduce cognitive load" },
+                { icon: "🔒", label: "Preserve trusted workflows" },
+                { icon: "🚀", label: "Enable a smoother, future-proof platform" },
+              ].map((g, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: "16px", padding: "20px 24px", background: "rgba(56,189,248,0.04)", border: `1px solid ${BLUE_DIM}`, borderRadius: "4px" }}>
+                  <span style={{ fontSize: "22px", flexShrink: 0 }}>{g.icon}</span>
+                  <span style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "14px", color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>{g.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Understanding the System ── */}
       <section id="system" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)`, background: "#0d0d0d" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "12px" }}>UNDERSTANDING THE SYSTEM</div>
+          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "20px" }}>UNDERSTANDING THE SYSTEM</div>
           <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.45)", maxWidth: "640px", lineHeight: "1.8", marginBottom: "48px" }}>
             Before I could redesign anything, I had to understand the full scope of what CCP actually was. Three interconnected pillars, each serving different users in fundamentally different ways.
           </p>
@@ -348,15 +387,36 @@ export default function BCBSACase() {
           <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
             {PILLARS.map((p, i) => {
               const isEven = i % 2 === 0;
+              const pillar = p as typeof p & { img?: string | null; imgs?: string[] };
               return (
-                <div key={p.number} style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: "0", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                  <div style={{ padding: "40px 32px", background: isEven ? "#111" : "#0f0f0f", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
-                    <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "22px", color: p.color, opacity: 0.15, marginBottom: "12px" }}>{p.number}</div>
-                    <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: p.color, letterSpacing: "1px", lineHeight: "2" }}>{p.name.toUpperCase()}</div>
+                <div key={p.number} style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: isEven ? "#111" : "#0f0f0f" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: "0" }}>
+                    <div style={{ padding: "40px 32px", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
+                      <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "22px", color: p.color, opacity: 0.15, marginBottom: "12px" }}>{p.number}</div>
+                      <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: p.color, letterSpacing: "1px", lineHeight: "2" }}>{p.name.toUpperCase()}</div>
+                    </div>
+                    <div style={{ padding: "40px 40px", display: "flex", alignItems: "center" }}>
+                      <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: "1.9", margin: 0 }}>{p.body}</p>
+                    </div>
                   </div>
-                  <div style={{ padding: "40px 40px", background: isEven ? "#111" : "#0f0f0f", display: "flex", alignItems: "center" }}>
-                    <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: "1.9", margin: 0 }}>{p.body}</p>
-                  </div>
+                  {/* Pillar 1 image */}
+                  {pillar.img && (
+                    <div style={{ padding: "0 32px 32px" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={pillar.img} alt={p.name} style={{ width: "100%", borderRadius: "6px", border: `1px solid ${p.color}22`, display: "block" }} />
+                    </div>
+                  )}
+                  {/* Pillar 3 images */}
+                  {pillar.imgs && (
+                    <div style={{ padding: "0 32px 32px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                      {pillar.imgs.map((src, si) => (
+                        <div key={si} style={{ borderRadius: "6px", border: `1px solid ${p.color}22`, overflow: "hidden", background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={src} alt={`${p.name} ${si + 1}`} style={{ width: "100%", height: "auto", display: "block" }} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -367,12 +427,12 @@ export default function BCBSACase() {
       {/* ── What I Found ── */}
       <section id="findings" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "12px" }}>WHAT I FOUND</div>
+          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "20px" }}>WHAT I FOUND</div>
           <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.45)", maxWidth: "640px", lineHeight: "1.8", marginBottom: "48px" }}>
             Through stakeholder interviews, workflow analysis, and hands-on use of the legacy system, three critical problems emerged — all rooted in the same underlying failure.
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(440px,1fr))", gap: "16px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "16px" }}>
             {FINDINGS.map((f, i) => (
               <div key={i} style={{ padding: "28px 32px", background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "4px", display: "flex", gap: "20px", alignItems: "flex-start" }}>
                 <span style={{ fontSize: "28px", flexShrink: 0, lineHeight: 1 }}>{f.emoji}</span>
@@ -389,7 +449,7 @@ export default function BCBSACase() {
       {/* ── Approach ── */}
       <section id="approach" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)`, background: "#0d0d0d" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "12px" }}>HOW I APPROACHED IT</div>
+          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "20px" }}>HOW I APPROACHED IT</div>
           <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.45)", maxWidth: "640px", lineHeight: "1.8", marginBottom: "48px" }}>
             Six phases. No big bang. Each phase built on the last.
           </p>
@@ -431,20 +491,55 @@ export default function BCBSACase() {
       {/* ── Key Design Decisions ── */}
       <section id="decisions" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "12px" }}>KEY DESIGN DECISIONS</div>
+          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "20px" }}>KEY DESIGN DECISIONS</div>
           <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.45)", maxWidth: "640px", lineHeight: "1.8", marginBottom: "0" }}>
             I can't show the final designs — the project is under NDA — but I can walk through the thinking behind each decision.
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0", marginTop: "40px" }}>
+
+            {/* Decision 01 */}
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "0" }}>
+                <div style={{ padding: "44px 40px", background: "#0a0a0a", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "32px", color: BLUE, opacity: 0.1, marginBottom: "12px" }}>01</div>
+                  <h3 style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "9px", color: "#fff", margin: "0 0 10px", letterSpacing: "1px", lineHeight: 1.8 }}>FIXING THE INFORMATION HIERARCHY</h3>
+                  <div style={{ height: "2px", width: "32px", background: BLUE, opacity: 0.5 }} />
+                </div>
+                <div style={{ padding: "44px 40px", background: "#0a0a0a", display: "flex", alignItems: "center" }}>
+                  <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: "1.9", margin: 0 }}>
+                    The most important design problem. Every piece of information in the old system competed equally for attention. In CC360, we made deliberate choices about what rises to the top — layering actionable data over supporting context, and restructuring navigation around how users actually think about their tasks.
+                  </p>
+                </div>
+              </div>
+              {/* MMP / PRR breakdown + image */}
+              <div style={{ padding: "0 40px 40px", background: "#0a0a0a", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "24px", paddingTop: "28px" }}>
+                  <div style={{ padding: "20px 24px", background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "4px" }}>
+                    <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "6px", color: BLUE, letterSpacing: "2px", marginBottom: "12px", opacity: 0.7 }}>MEMBER PROFILE (MMP)</div>
+                    <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "13px", color: "rgba(255,255,255,0.55)", lineHeight: "1.85", margin: 0 }}>Active alerts and referral statuses rose to the top. Eligibility details, program history, and demographics stayed accessible but stopped competing for the same visual real estate. A care manager could immediately see what needed attention.</p>
+                  </div>
+                  <div style={{ padding: "20px 24px", background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "4px" }}>
+                    <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "6px", color: BLUE, letterSpacing: "2px", marginBottom: "12px", opacity: 0.7 }}>PLAN ROSTERS & REPORTS (PRR)</div>
+                    <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "13px", color: "rgba(255,255,255,0.55)", lineHeight: "1.85", margin: 0 }}>Navigation restructured around how users think about tasks — not the database structure. Fewer steps, smarter defaults, clearer paths from "I need to check something" to actually seeing that data.</p>
+                  </div>
+                </div>
+                <div style={{ borderRadius: "6px", overflow: "hidden", border: `1px solid ${BLUE_DIM}` }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/work/BCBSA/before-after.png" alt="Before and After comparison" style={{ width: "100%", display: "block" }} />
+                </div>
+              </div>
+            </div>
+
+            {/* Decisions 02–04 */}
             {DECISIONS.map((d, i) => (
-              <div key={d.number} style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "0", borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: i === 0 ? "40px" : "0" }}>
-                <div style={{ padding: "44px 40px", background: i % 2 === 0 ? "#0a0a0a" : "#0d0d0d", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
+              <div key={d.number} style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "0", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                <div style={{ padding: "44px 40px", background: i % 2 === 0 ? "#0d0d0d" : "#0a0a0a", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
                   <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "32px", color: d.color, opacity: 0.1, marginBottom: "12px" }}>{d.number}</div>
                   <h3 style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "9px", color: "#fff", margin: "0 0 10px", letterSpacing: "1px", lineHeight: 1.8 }}>{d.title.toUpperCase()}</h3>
                   <div style={{ height: "2px", width: "32px", background: d.color, opacity: 0.5 }} />
                 </div>
-                <div style={{ padding: "44px 40px", background: i % 2 === 0 ? "#0a0a0a" : "#0d0d0d", display: "flex", alignItems: "center" }}>
+                <div style={{ padding: "44px 40px", background: i % 2 === 0 ? "#0d0d0d" : "#0a0a0a", display: "flex", alignItems: "center" }}>
                   <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: "1.9", margin: 0 }}>{d.body}</p>
                 </div>
               </div>
@@ -482,7 +577,7 @@ export default function BCBSACase() {
             "The hardest part of this project wasn't designing the new system. It was respecting the old one."
           </blockquote>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: "16px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: "16px", marginBottom: "48px" }}>
             {LEARNINGS.map((l) => (
               <div key={l.number} style={{ padding: "28px 24px", background: "#0f0f0f", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "4px", position: "relative" }}>
                 <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "22px", color: BLUE, opacity: 0.1, position: "absolute", top: "16px", right: "20px" }}>{l.number}</div>
@@ -490,6 +585,11 @@ export default function BCBSACase() {
                 <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "13px", color: "rgba(255,255,255,0.5)", lineHeight: "1.8", margin: 0 }}>{l.body}</p>
               </div>
             ))}
+          </div>
+          <div style={{ padding: "28px 32px", background: "rgba(56,189,248,0.04)", border: `1px solid ${BLUE_DIM}`, borderRadius: "4px" }}>
+            <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.55)", lineHeight: "1.85", margin: 0, fontStyle: "italic" }}>
+              In healthcare UX, the cost of confusing someone isn't a bad NPS score. It's a delayed referral, a missed alert, a care manager who couldn't find what they needed mid-call. That context changes what design decisions mean — and what they're worth getting right.
+            </p>
           </div>
         </div>
       </section>
@@ -502,12 +602,21 @@ export default function BCBSACase() {
           <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.4)", marginBottom: "36px", maxWidth: "500px", margin: "0 auto 36px", lineHeight: "1.8" }}>
             Final designs are protected under NDA. Reach out directly to discuss the project in more detail.
           </p>
-          <Link href="/"
-            style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", padding: "14px 24px", background: "transparent", color: BLUE, border: `1px solid ${BLUE_DIM}`, borderRadius: "2px", textDecoration: "none", letterSpacing: "1px" }}>
-            ← BACK TO PORTFOLIO
-          </Link>
+          <a href="/#work"
+            style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", padding: "14px 24px", background: "transparent", color: BLUE, border: `1px solid ${BLUE_DIM}`, borderRadius: "2px", textDecoration: "none", letterSpacing: "1px", display: "inline-grid", gridAutoFlow: "column", alignItems: "center", gap: "6px" }}>
+            <span style={{ display: "block", lineHeight: "1", fontSize: "14px", transform: "translateY(-4px)" }}>←</span>
+            <span style={{ display: "block", lineHeight: "1" }}>BACK TO PORTFOLIO</span>
+          </a>
         </div>
       </section>
     </div>
+  );
+}
+
+export default function BCBSACase() {
+  return (
+    <PasswordGate password="SmilePlease!" accentColor="#38bdf8">
+      <BCBSAContent />
+    </PasswordGate>
   );
 }
