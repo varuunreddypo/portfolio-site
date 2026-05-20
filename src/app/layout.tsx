@@ -18,7 +18,7 @@ const vt323 = VT323({
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-montserrat",
   display: "swap",
 });
 
@@ -36,9 +36,10 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
+  icons: { icon: "/logo.png" },
   title: "Varuun Reddy — Product Designer",
   description:
-    "Product Designer with experience across B2B, healthcare, PropTech, EV, and EdTech. Based in Dallas, TX.",
+    "Product Designer with experience across B2B, healthcare, EdTech, EV, Utility, and Retail. Based in Dallas, TX.",
   openGraph: {
     title: "Varuun Reddy — Product Designer",
     description:
@@ -57,7 +58,7 @@ export default function RootLayout({
       lang="en"
       className={`${pressStart2P.variable} ${vt323.variable} ${montserrat.variable} ${caveat.variable} ${spaceMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col antialiased">{children}</body>
+      <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>{children}</body>
     </html>
   );
 }

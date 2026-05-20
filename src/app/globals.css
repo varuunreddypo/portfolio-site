@@ -30,8 +30,14 @@
   --font-mono: var(--font-mono-retro, monospace);
   --font-body: var(--font-body, sans-serif);
   --font-handwritten: var(--font-handwritten, cursive);
-  --font-display: var(--font-display, sans-serif);
+  --font-display: var(--font-space-mono, monospace);
   --font-space-mono: var(--font-space-mono, monospace);
+
+  /* Premium easing curves */
+  --ease-out:    cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-in:     cubic-bezier(0.4, 0.0, 1,   1);
+  --ease-inout:  cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @theme inline {
@@ -45,6 +51,12 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+/* Push all hash-linked sections below the fixed navbar */
+section[id] {
+  scroll-margin-top: 80px;
 }
 
 body {
@@ -53,6 +65,7 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* Pixel font utility */
@@ -104,7 +117,314 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 3px;
+  transition: background 150ms var(--ease-inout);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-dim);
+}
+
+/* ── Animated nav-link underline ── */
+.nav-link {
+  position: relative;
+  display: inline-block;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 180ms var(--ease-out);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+
+/* ── Hero responsive grid ── */
+.hero-main-panel {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 16px;
+}
+
+@media (max-width: 820px) {
+  .hero-main-panel {
+    grid-template-columns: 1fr;
+  }
+  .hero-photo-col {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .hero-photo-frame {
+    min-height: 200px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-photo-col {
+    grid-template-columns: 1fr;
+  }
+  .hero-photo-frame {
+    min-height: 220px !important;
+  }
+}
+
+/* ── Image card hover overlay ── */
+.image-collage-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  border-radius: 4px;
+  z-index: 2;
+}
+.image-collage-wrap:hover .image-collage-overlay {
+  opacity: 1;
+}
+.image-collage-wrap:hover img {
+  filter: brightness(1.06) saturate(1.05);
+  transition: filter 0.3s ease;
+}
+
+/* ── Accessibility: disable all motion for users who prefer it ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── A11Y Gym: LockedBadge ── */
+.locked-badge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: visible;
+}
+
+.locked-badge {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  cursor: default;
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+}
+
+.locked-badge.badge-locked,
+.locked-badge.badge-preview {
+  cursor: pointer;
+}
+
+.locked-badge:hover {
+  transform: scale(1.07);
+}
+
+.badge-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: filter 0.28s ease;
+}
+
+.badge-locked .badge-img {
+  filter: grayscale(1) brightness(0.55);
+}
+
+.badge-preview .badge-img {
+  filter: grayscale(0) brightness(1);
+}
+
+.badge-earned .badge-img {
+  filter: none;
+}
+
+.lock-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.lock-overlay.lock-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lock-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-locked:hover .lock-icon {
+  animation: lockShake 0.38s ease;
+}
+
+
+.earned-glow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 196, 0, 0.22) 0%, transparent 70%);
+  animation: badgeEarnedPulse 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes lockShake {
+  0%, 100% { transform: rotate(0deg); }
+  20%       { transform: rotate(-14deg); }
+  45%       { transform: rotate(14deg); }
+  65%       { transform: rotate(-8deg); }
+  82%       { transform: rotate(8deg); }
+}
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes badgeEarnedPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.12); }
+}
+
+/* ── A11Y Gym: BadgeCelebrationModal ── */
+.badge-celebration-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.badge-celebration-panel {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  background: linear-gradient(160deg, #1a1230 0%, #0f1728 100%);
+  border: 2px solid rgba(245, 196, 0, 0.4);
+  border-radius: 20px;
+  padding: 36px 28px 28px;
+  text-align: center;
+  box-shadow:
+    0 0 60px rgba(245, 196, 0, 0.18),
+    0 32px 80px rgba(0, 0, 0, 0.8);
+  animation: celebrationPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  z-index: 1;
+}
+
+.badge-aura {
+  position: absolute;
+  inset: -24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 196, 0, 0.14) 0%, transparent 68%);
+  animation: badgeAuraPulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.badge-reveal-wrap {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 22px;
+  animation: badgeReveal 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.badge-celebrate-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: badgeFloat 3s ease-in-out 0.65s infinite;
+}
+
+.confetti-piece {
+  position: fixed;
+  top: -12px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes celebrationPop {
+  from { transform: scale(0.82) translateY(20px); opacity: 0; }
+  to   { transform: scale(1)    translateY(0);    opacity: 1; }
+}
+
+@keyframes badgeReveal {
+  from { transform: scale(0.2) rotate(-25deg); opacity: 0; }
+  to   { transform: scale(1)   rotate(0deg);   opacity: 1; }
+}
+
+@keyframes badgeAuraPulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%       { opacity: 1;    transform: scale(1.1); }
+}
+
+@keyframes confettiFall {
+  0%   { transform: translateY(0)     rotate(0deg);   opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(800deg); opacity: 0; }
+}
+
+/* ── Poke Stones ── */
+.poke-stone {
+  animation: stoneFloat 2s ease-in-out infinite;
+}
+.stone-halo {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  animation: stoneGlowPulse 1.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+.stone-sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparklePop 2.4s ease-in-out infinite;
+}
+.stone-sparkle-0 { top: 10%; left: 75%; animation-delay: 0s; }
+.stone-sparkle-1 { top: 70%; left: 15%; animation-delay: 0.8s; }
+.stone-sparkle-2 { top: 20%; left: 88%; animation-delay: 1.6s; }
+
+@keyframes stoneFloat {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+@keyframes stoneGlowPulse {
+  0%,100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 0.9; transform: scale(1.15); }
+}
+@keyframes sparklePop {
+  0%       { transform: scale(0); opacity: 0; }
+  35%      { transform: scale(1); opacity: 1; }
+  100%     { transform: scale(0); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .poke-stone, .stone-halo, .stone-sparkle {
+    animation: none !important;
+  }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import PasswordGate from "@/components/ui/PasswordGate";
 
 const GOLD = "#ffd700";
 const GOLD_DIM = "rgba(255,215,0,0.15)";
@@ -164,15 +164,42 @@ const NAV_SECTIONS = [
   { id: "learnings", label: "Key Learnings" },
 ];
 
+const CAROUSEL_IMAGES = [
+  "/Roombees%20Carousal/Frame%201000005620.png",
+  "/Roombees%20Carousal/Frame%201000005621.png",
+  "/Roombees%20Carousal/Frame%201000005622.png",
+  "/Roombees%20Carousal/Frame%201000005623.png",
+  "/Roombees%20Carousal/Frame%201000005624.png",
+  "/Roombees%20Carousal/Frame%201000005625.png",
+  "/Roombees%20Carousal/Frame%201000005626.png",
+];
+
 const FLOW_TABS = [
   { id: "onboarding", label: "ONBOARDING", src: "/work/RoomBees/flow-onborading.png", desc: "Start → Splash → Onboarding → Auth → Location → Main Screen" },
   { id: "home",       label: "HOME",       src: "/work/RoomBees/flow-home.png",       desc: "Home → Roommates (Swipe / Match) & Rooms (Browse / Connect)" },
   { id: "features",  label: "HIVENEST + DIVVYDO", src: "/work/RoomBees/flow-features.png", desc: "HiveNest property discovery & Divvydo expense splitting flows" },
 ];
 
-export default function RoomBeesCase() {
+function RoomBeesContent() {
   const [activeFlow, setActiveFlow] = useState("onboarding");
   const [activeSection, setActiveSection] = useState("overview");
+  const isScrolling = useRef(false);
+  const [carouselOpen, setCarouselOpen] = useState(false);
+  const [carouselIdx, setCarouselIdx] = useState(0);
+
+  const prevSlide = () => setCarouselIdx(i => (i - 1 + CAROUSEL_IMAGES.length) % CAROUSEL_IMAGES.length);
+  const nextSlide = () => setCarouselIdx(i => (i + 1) % CAROUSEL_IMAGES.length);
+
+  useEffect(() => {
+    if (!carouselOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setCarouselOpen(false);
+      if (e.key === "ArrowLeft") prevSlide();
+      if (e.key === "ArrowRight") nextSlide();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [carouselOpen]);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -180,8 +207,8 @@ export default function RoomBeesCase() {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
-        ([e]) => { if (e.isIntersecting) setActiveSection(id); },
-        { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+        ([e]) => { if (e.isIntersecting && !isScrolling.current) setActiveSection(id); },
+        { rootMargin: "-5% 0px -70% 0px", threshold: 0 }
       );
       obs.observe(el);
       observers.push(obs);
@@ -190,7 +217,10 @@ export default function RoomBeesCase() {
   }, []);
 
   const scrollTo = (id: string) => {
+    setActiveSection(id);
+    isScrolling.current = true;
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => { isScrolling.current = false; }, 900);
   };
 
   return (
@@ -203,7 +233,10 @@ export default function RoomBeesCase() {
 
       {/* ── Navbar ── */}
       <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, background: "rgba(10,10,10,0.92)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255,215,0,0.1)", padding: "0 24px", height: "56px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Link href="/" style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: GOLD, textDecoration: "none", letterSpacing: "1px" }}>← BACK</Link>
+        <a href="/#work" style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: GOLD, textDecoration: "none", letterSpacing: "1px", display: "inline-grid", gridAutoFlow: "column", alignItems: "center", gap: "6px" }}>
+          <span style={{ display: "block", lineHeight: "1", fontSize: "14px", transform: "translateY(-4px)" }}>←</span>
+          <span style={{ display: "block", lineHeight: "1" }}>BACK</span>
+        </a>
         <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(255,215,0,0.4)", letterSpacing: "3px" }}>ROOMBEES — CASE STUDY</span>
         <a href="https://www.roombees.com" target="_blank" rel="noopener noreferrer" style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: GOLD, textDecoration: "none", letterSpacing: "1px", padding: "8px 14px", border: `1px solid ${GOLD_DIM}`, borderRadius: "2px" }}>LIVE SITE ↗</a>
       </nav>
@@ -257,12 +290,128 @@ export default function RoomBeesCase() {
       </nav>
 
       {/* ── Hero Image ── */}
-      <div style={{ padding: "0 24px 64px", borderBottom: `1px solid ${GOLD_DIM}` }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", borderRadius: "6px", overflow: "hidden", border: `1px solid ${GOLD_DIM}` }}>
+      <div style={{ padding: "48px 24px 64px", borderBottom: `1px solid ${GOLD_DIM}` }}>
+        <div
+          style={{ maxWidth: "1000px", margin: "0 auto", borderRadius: "6px", overflow: "hidden", border: `1px solid ${GOLD_DIM}`, position: "relative", cursor: "pointer" }}
+          onClick={() => { setCarouselIdx(0); setCarouselOpen(true); }}
+          onMouseEnter={e => (e.currentTarget.querySelector('img') as HTMLElement).style.filter = 'brightness(0.75)'}
+          onMouseLeave={e => (e.currentTarget.querySelector('img') as HTMLElement).style.filter = ''}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/work/RoomBees/hero.jpeg" alt="RoomBees product" style={{ width: "100%", display: "block" }} />
+          <img src="/work/RoomBees/hero.jpeg" alt="RoomBees product — click to view screen designs" style={{ width: "100%", display: "block", transition: "filter 0.2s" }} />
+          {/* Always-visible badge */}
+          <div style={{
+            position: "absolute", bottom: 14, right: 14,
+            display: "flex", alignItems: "center", gap: 6,
+            padding: "7px 12px",
+            background: "rgba(0,0,0,0.72)", backdropFilter: "blur(8px)",
+            border: `1px solid ${GOLD_DIM}`,
+            borderRadius: "4px",
+            pointerEvents: "none",
+          }}>
+            <span style={{ fontSize: 12 }}>🖼️</span>
+            <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: GOLD, letterSpacing: "1px" }}>
+              VIEW {CAROUSEL_IMAGES.length} SCREENS
+            </span>
+          </div>
         </div>
+        <p style={{ maxWidth: "1000px", margin: "10px auto 0", fontFamily: "var(--font-display,sans-serif)", fontSize: "12px", color: "rgba(255,255,255,0.25)", textAlign: "center" }}>
+          Click image to browse screen designs
+        </p>
       </div>
+
+      {/* ── Carousel modal ── */}
+      {carouselOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Screen designs carousel"
+          style={{
+            position: "fixed", inset: 0, zIndex: 100,
+            background: "rgba(0,0,0,0.92)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: "16px",
+          }}
+          onClick={() => setCarouselOpen(false)}
+        >
+          {/* Counter */}
+          <div style={{
+            position: "absolute", top: 20, left: "50%", transform: "translateX(-50%)",
+            fontFamily: '"Press Start 2P",monospace', fontSize: "8px",
+            color: "rgba(255,215,0,0.6)", letterSpacing: "2px",
+          }}>
+            {carouselIdx + 1} / {CAROUSEL_IMAGES.length}
+          </div>
+
+          {/* Close */}
+          <button
+            onClick={() => setCarouselOpen(false)}
+            aria-label="Close carousel"
+            style={{
+              position: "absolute", top: 16, right: 20,
+              background: "none", border: "none", color: "rgba(255,255,255,0.5)",
+              fontSize: "24px", cursor: "pointer", lineHeight: 1,
+            }}
+          >×</button>
+
+          {/* Prev */}
+          <button
+            onClick={e => { e.stopPropagation(); prevSlide(); }}
+            aria-label="Previous screen"
+            style={{
+              position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)",
+              background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: "50%", width: 44, height: 44, color: "#fff",
+              fontSize: "18px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >‹</button>
+
+          {/* Image */}
+          <div onClick={e => e.stopPropagation()} style={{ maxHeight: "85vh", maxWidth: "90vw", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              key={carouselIdx}
+              src={CAROUSEL_IMAGES[carouselIdx]}
+              alt={`Screen design ${carouselIdx + 1}`}
+              style={{ maxHeight: "85vh", maxWidth: "90vw", objectFit: "contain", borderRadius: "8px", display: "block" }}
+            />
+          </div>
+
+          {/* Next */}
+          <button
+            onClick={e => { e.stopPropagation(); nextSlide(); }}
+            aria-label="Next screen"
+            style={{
+              position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)",
+              background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: "50%", width: 44, height: 44, color: "#fff",
+              fontSize: "18px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >›</button>
+
+          {/* Dot indicators */}
+          <div style={{
+            position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)",
+            display: "flex", gap: 8,
+          }}>
+            {CAROUSEL_IMAGES.map((_, i) => (
+              <button
+                key={i}
+                onClick={e => { e.stopPropagation(); setCarouselIdx(i); }}
+                aria-label={`Go to screen ${i + 1}`}
+                style={{
+                  width: i === carouselIdx ? 20 : 8, height: 8,
+                  borderRadius: 4, border: "none", cursor: "pointer",
+                  background: i === carouselIdx ? GOLD : "rgba(255,255,255,0.25)",
+                  transition: "width 0.2s, background 0.2s",
+                  padding: 0,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
 
       {/* ── Project Meta ── */}
       <section id="meta" style={{ padding: "72px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
@@ -328,8 +477,8 @@ export default function RoomBeesCase() {
       {/* ── Research & Analysis ── */}
       <section id="research" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)`, background: "#0d0d0d" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ marginBottom: "16px" }}>
-            <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: GOLD, letterSpacing: "3px", marginBottom: "12px" }}>RESEARCH & ANALYSIS</div>
+          <div style={{ marginBottom: "0" }}>
+            <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: GOLD, letterSpacing: "3px", marginBottom: "20px" }}>RESEARCH & ANALYSIS</div>
             <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.45)", maxWidth: "600px", lineHeight: "1.8" }}>
               Surveys, interviews, and informal usability testing with students and young professionals revealed that the hardest part of the roommate experience wasn't living together — it was everything before: the discovery, the decision-making, and the leap of faith.
             </p>
@@ -447,7 +596,7 @@ export default function RoomBeesCase() {
             <div style={{ marginBottom: "32px" }}>
               <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "#f87171", letterSpacing: "2px", marginBottom: "14px" }}>THE PROBLEM</div>
               <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.65)", lineHeight: "1.85", maxWidth: "700px", margin: 0 }}>
-                In usability testing, <strong style={{ color: "#fff" }}>12 out of 20 users</strong> dropped off immediately after tapping &quot;Place&quot; to post a property. The pop-up title &quot;Bank Details Not Found&quot; read as an error, and neither CTA made it clear they could continue without adding bank details.
+                In usability testing, <strong style={{ color: "#fff" }}>12 out of 20 users</strong>{" "}dropped off immediately after tapping &quot;Place&quot; to post a property. The pop-up title &quot;Bank Details Not Found&quot; read as an error, and neither CTA made it clear they could continue without adding bank details.
               </p>
             </div>
 
@@ -503,7 +652,7 @@ export default function RoomBeesCase() {
           </div>
 
           {/* ── REWORK 2 ── */}
-          <div>
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "80px" }}>
             {/* Header */}
             <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "32px", paddingBottom: "20px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
               <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: GOLD, opacity: 0.4 }}>REWORK 02</span>
@@ -514,7 +663,7 @@ export default function RoomBeesCase() {
             <div style={{ marginBottom: "28px" }}>
               <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "#f87171", letterSpacing: "2px", marginBottom: "14px" }}>THE PROBLEM</div>
               <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.65)", lineHeight: "1.85", maxWidth: "700px", margin: 0 }}>
-                The original signup flow required users to complete <strong style={{ color: "#fff" }}>three dense screens</strong> before creating an account — personal details, photos, bios, university, lifestyle habits, personality traits, career info, and roommate preferences. All before they had a chance to explore the app.
+                The original signup flow required users to complete <strong style={{ color: "#fff" }}>three dense screens</strong>{" "}before creating an account — personal details, photos, bios, university, lifestyle habits, personality traits, career info, and roommate preferences. All before they had a chance to explore the app.
               </p>
             </div>
 
@@ -545,7 +694,7 @@ export default function RoomBeesCase() {
             </div>
 
             {/* Before / After side by side */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "28px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "28px" }}>
               <div style={{ background: "#0f0f0f", border: "1px solid rgba(248,113,113,0.2)", borderRadius: "4px", overflow: "hidden" }}>
                 <div style={{ padding: "8px 14px", background: "rgba(248,113,113,0.08)", borderBottom: "1px solid rgba(248,113,113,0.15)" }}>
                   <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "6px", color: "#f87171", letterSpacing: "2px" }}>BEFORE — 3 DENSE SCREENS</span>
@@ -607,8 +756,8 @@ export default function RoomBeesCase() {
       {/* ── Business Strategy ── */}
       <section id="business" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)`, background: "#0d0d0d" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: GOLD, letterSpacing: "3px", marginBottom: "12px" }}>THINKING BUSINESS</div>
-          <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "clamp(16px,2vw,20px)", color: "rgba(255,255,255,0.7)", marginBottom: "32px", fontWeight: 600 }}>A Growth-First Strategy</div>
+          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: GOLD, letterSpacing: "3px", marginBottom: "16px" }}>BUSINESS STRATEGY</div>
+          <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "clamp(16px,2vw,20px)", color: "rgba(255,255,255,0.7)", marginBottom: "36px", fontWeight: 600 }}>A Growth-First Strategy</div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "32px" }}>
             {[
@@ -632,7 +781,10 @@ export default function RoomBeesCase() {
       {/* ── Key Learnings ── */}
       <section id="learnings" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: GOLD, letterSpacing: "3px", marginBottom: "40px" }}>KEY LEARNINGS</div>
+          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: GOLD, letterSpacing: "3px", marginBottom: "20px" }}>KEY LEARNINGS</div>
+          <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "rgba(255,255,255,0.4)", maxWidth: "640px", lineHeight: "1.8", marginBottom: "40px" }}>
+            Nineteen months of shipping, testing, and iterating on a live product — here&apos;s what stayed with me.
+          </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: "16px" }}>
             {LEARNINGS.map((l) => (
               <div key={l.number} style={{ padding: "28px 24px", background: "#0f0f0f", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "4px", position: "relative" }}>
@@ -658,13 +810,22 @@ export default function RoomBeesCase() {
               style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", padding: "14px 24px", background: GOLD, color: "#0a0a0a", borderRadius: "2px", textDecoration: "none", letterSpacing: "1px" }}>
               VISIT ROOMBEES ↗
             </a>
-            <Link href="/"
-              style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", padding: "14px 24px", background: "transparent", color: GOLD, border: `1px solid ${GOLD_DIM}`, borderRadius: "2px", textDecoration: "none", letterSpacing: "1px" }}>
-              ← BACK TO PORTFOLIO
-            </Link>
+            <a href="/#work"
+              style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", padding: "14px 24px", background: "transparent", color: GOLD, border: `1px solid ${GOLD_DIM}`, borderRadius: "2px", textDecoration: "none", letterSpacing: "1px", display: "inline-grid", gridAutoFlow: "column", alignItems: "center", gap: "6px" }}>
+              <span style={{ display: "block", lineHeight: "1", fontSize: "14px", transform: "translateY(-4px)" }}>←</span>
+              <span style={{ display: "block", lineHeight: "1" }}>BACK TO PORTFOLIO</span>
+            </a>
           </div>
         </div>
       </section>
     </div>
+  );
+}
+
+export default function RoomBeesCase() {
+  return (
+    <PasswordGate password="SmilePlease!" accentColor="#ffd700">
+      <RoomBeesContent />
+    </PasswordGate>
   );
 }
