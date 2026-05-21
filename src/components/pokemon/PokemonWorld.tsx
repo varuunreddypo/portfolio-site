@@ -287,6 +287,7 @@ function StarterCard({ p, isChosen, bc, onClick }: { p: Mon; isChosen: boolean; 
     <div onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      className="pw-starter-card"
       style={{ background:"#161b22", border: isChosen ? `3px solid ${bc}` : "2px solid #22283a",
         borderRadius:"11px", padding:"14px 6px 10px", display:"flex", flexDirection:"column",
         alignItems:"center", cursor:"pointer", position:"relative", userSelect:"none",
@@ -298,8 +299,9 @@ function StarterCard({ p, isChosen, bc, onClick }: { p: Mon; isChosen: boolean; 
       )}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={`${SPR}${p.id}.png`} alt={p.name} width={96} height={96}
+        className="pw-starter-sprite"
         style={{ imageRendering:"pixelated", filter:"drop-shadow(0 2px 5px rgba(0,0,0,.5))", position:"relative", zIndex:1 }} />
-      <div style={{ fontFamily:'"Press Start 2P",monospace', color:"#ccd", fontSize:"8px", marginTop:"10px", textAlign:"center", position:"relative", zIndex:1 }}>{p.name.toUpperCase()}</div>
+      <div className="pw-starter-name" style={{ fontFamily:'"Press Start 2P",monospace', color:"#ccd", fontSize:"8px", marginTop:"10px", textAlign:"center", position:"relative", zIndex:1 }}>{p.name.toUpperCase()}</div>
       <div style={{ display:"flex", gap:"4px", marginTop:"8px", flexWrap:"wrap", justifyContent:"center", position:"relative", zIndex:1 }}>
         {p.types.map(t => <span key={t} style={{ fontFamily:'"Press Start 2P",monospace', fontSize:"6px", padding:"4px 7px", borderRadius:"3px", color:"#fff", background:TC[t] ?? "#555" }}>{t}</span>)}
       </div>
@@ -513,6 +515,10 @@ export default function PokemonWorld() {
         @keyframes landIn         { from{opacity:0} to{opacity:1} }
         @keyframes jumpluffFloat  { 0%,100%{transform:translateY(0) translateX(0)} 35%{transform:translateY(-13px) translateX(5px)} 70%{transform:translateY(-6px) translateX(-4px)} }
         .pw-start:hover span      { animation:none !important; opacity:1 !important; }
+        @media (max-width: 768px) {
+          .pw-oak-tree-wrap { left: -14% !important; }
+          .pw-start { padding: 10px 18px !important; font-size: 9px !important; }
+        }
       `}</style>
 
       {/* Flash overlay */}
@@ -608,7 +614,7 @@ export default function PokemonWorld() {
           </div>
 
           {/* ── Oak Tree + Chimchar (lower-left, synced with grass) ── */}
-          <div style={{ position: "absolute", bottom: "80px", left: "3%", zIndex: 4, pointerEvents: "none",
+          <div className="pw-oak-tree-wrap" style={{ position: "absolute", bottom: "80px", left: "3%", zIndex: 4, pointerEvents: "none",
             animation: "landIn 0.5s 0.1s ease both" }}>
             <div style={{ position: "relative", width: "196px", height: "224px" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -649,10 +655,10 @@ export default function PokemonWorld() {
 
       {/* ── EXPLORE: Starter Select + Visitor Card (split screen) ── */}
       {phase === "explore" && (
-        <div style={{ position: "fixed", inset: 0, display: "flex", zIndex: 100 }}>
+        <div className="pw-explore-layout" style={{ position: "fixed", inset: 0, display: "flex", zIndex: 100 }}>
 
           {/* LEFT — Pokemon grid */}
-          <div style={{ flex: 1, minWidth: 0, background: "#0d1117", overflowY: "auto", padding: "24px 28px 40px 28px", borderRight: "1px solid rgba(255,255,255,.06)" }}>
+          <div className="pw-explore-left" style={{ flex: 1, minWidth: 0, background: "#0d1117", overflowY: "auto", padding: "24px 28px 40px 28px", borderRight: "1px solid rgba(255,255,255,.06)" }}>
             <button onClick={() => goTo("landing")} style={{ background: "none", border: "none", fontFamily: '"Space Mono",monospace', fontSize: "11px", color: "#556", cursor: "pointer", letterSpacing: "2px", marginBottom: "14px", display: "block" }}
               onMouseEnter={e => e.currentTarget.style.color = "#aaa"} onMouseLeave={e => e.currentTarget.style.color = "#556"}>
               ← BACK
@@ -661,6 +667,39 @@ export default function PokemonWorld() {
             <p style={{ fontFamily: '"Press Start 2P",monospace', color: "#334", fontSize: "6px", letterSpacing: "2px", marginBottom: "16px" }}>pick one to receive your trainer card</p>
 
             <style>{`
+              @media (max-width: 768px) {
+                .pw-explore-layout {
+                  flex-direction: column !important;
+                  overflow-y: auto;
+                }
+                .pw-explore-left {
+                  flex: none !important;
+                  width: 100%;
+                  border-right: none !important;
+                  border-bottom: 1px solid rgba(255,255,255,.06);
+                  padding: 16px 16px 24px !important;
+                }
+                .pw-explore-right {
+                  flex: none !important;
+                  width: 100%;
+                }
+                .pw-starter-grid {
+                  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)) !important;
+                  gap: 8px !important;
+                }
+                .pw-starter-card {
+                  padding: 8px 4px 8px !important;
+                  border-radius: 8px !important;
+                }
+                .pw-starter-sprite {
+                  width: 56px !important;
+                  height: 56px !important;
+                }
+                .pw-starter-name {
+                  font-size: 6px !important;
+                  margin-top: 6px !important;
+                }
+              }
               @keyframes pwElecFlash {
                 0%,1.5%  { opacity:0; }
                 2%       { opacity:0.88; }
@@ -750,7 +789,7 @@ export default function PokemonWorld() {
                 100% { background-position:0%   50%; }
               }
             `}</style>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(140px,1fr))", gap: "10px" }}>
+            <div className="pw-starter-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(140px,1fr))", gap: "10px" }}>
               {MONS.map(p => (
                 <StarterCard
                   key={p.id}
@@ -793,7 +832,7 @@ export default function PokemonWorld() {
           </div>
 
           {/* RIGHT — Visitor Card */}
-          <div style={{ flex: 1, minWidth: 0, background: "#e8f0e8", backgroundImage: "radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px)", backgroundSize: "18px 18px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "32px 24px", overflowY: "auto" }}>
+          <div className="pw-explore-right" style={{ flex: 1, minWidth: 0, background: "#e8f0e8", backgroundImage: "radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px)", backgroundSize: "18px 18px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "32px 24px", overflowY: "auto" }}>
 
             {/* Pokémon-style dialog box */}
             <div style={{ background: "#fff", border: "3px solid #1a1a1a", borderRadius: "6px", padding: "18px 20px 22px", maxWidth: "300px", width: "100%", marginBottom: "26px", boxShadow: "5px 5px 0 #1a1a1a", position: "relative" }}>
