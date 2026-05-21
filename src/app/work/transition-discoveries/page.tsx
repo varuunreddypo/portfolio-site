@@ -243,7 +243,7 @@ export default function TransitionDiscoveriesPage() {
       </nav>
 
       {/* ── Side Nav ── */}
-      <nav style={{ position: "fixed", left: "28px", top: "50%", transform: "translateY(-50%)", zIndex: 40, display: "flex", flexDirection: "column", gap: "6px" }}>
+      <nav className="cs-side-nav" style={{ position: "fixed", left: "28px", top: "50%", transform: "translateY(-50%)", zIndex: 40, display: "flex", flexDirection: "column", gap: "6px" }}>
         {NAV_SECTIONS.map(({ id, label }) => {
           const active = activeSection === id;
           return (
@@ -342,7 +342,7 @@ export default function TransitionDiscoveriesPage() {
           </div>
 
           {/* Two half cards */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "32px" }}>
+          <div className="cs-grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "32px" }}>
             {[
               { icon: "🖥️", body: "Enhance the website to offer clear, navigable, and engaging content that works for users with varied disabilities." },
               { icon: "🤝", body: "Address the unique needs of each user so they feel supported and confident in their educational and career progression." },
@@ -476,7 +476,7 @@ export default function TransitionDiscoveriesPage() {
                   <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "10px", color: PURPLE }}>{p.number}</span>
                   <h3 style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "clamp(1rem,1.5vw,1.2rem)", fontWeight: 700, color: "var(--text-primary)", margin: 0 }}>{p.title}</h3>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginBottom: "28px" }}>
+                <div className="cs-grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginBottom: "28px" }}>
                   <div style={{ padding: "24px", background: "var(--bg-card)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "4px" }}>
                     <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(255,80,80,0.7)", letterSpacing: "2px", marginBottom: "12px" }}>PINPOINT</div>
                     <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: 1.75, margin: 0 }}>{p.problem}</p>
@@ -493,7 +493,7 @@ export default function TransitionDiscoveriesPage() {
                     </ul>
                   </div>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                <div className="cs-grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                   {[{ label: "BEFORE", src: p.before }, { label: "AFTER", src: p.after }].map(({ label, src }) => (
                     <div key={label}>
                       {!p.hideLabels && (

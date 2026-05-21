@@ -194,6 +194,41 @@ body {
   transition: filter 0.3s ease;
 }
 
+/* ── Mobile responsiveness ── */
+@media (max-width: 768px) {
+  /* Navbar: hide links, keep logo + resume */
+  .desktop-nav-links { display: none !important; }
+
+  /* Hero: stack card to single column */
+  .hero-panel-grid { grid-template-columns: 1fr !important; }
+  .hero-panel { padding: 16px !important; }
+  .hero-dex-title { display: none !important; }
+  .hero-photo-frame { min-height: 180px !important; max-height: 220px !important; }
+
+  /* Work: shrink collage, hide easter eggs, reduce gap */
+  .work-collage { height: 200px !important; }
+  .work-easter-egg { display: none !important; }
+  .work-projects { gap: 3.5rem !important; }
+
+  /* Case studies: stack content grids */
+  .cs-grid-main { grid-template-columns: 1fr !important; }
+  .cs-grid-2col { grid-template-columns: 1fr !important; }
+  .cs-side-nav { display: none !important; }
+  .cs-section-pad { padding: 60px 16px 40px !important; }
+  .cs-feature-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .cs-feature-row > * { order: 0 !important; border-right: none !important; border-left: none !important; }
+  .cs-stats-row { flex-wrap: wrap !important; gap: 12px !important; }
+  .cs-stat-box { flex: 1 1 120px !important; min-width: 0 !important; }
+  .cs-hero-img { height: 220px !important; }
+  .cs-carousel-nav { display: flex !important; gap: 8px !important; }
+}
+
+@media (max-width: 480px) {
+  .hero-panel { padding: 12px !important; }
+  .work-collage { height: 170px !important; }
+  .cs-section-pad { padding: 60px 12px 32px !important; }
+}
+
 /* ── Accessibility: disable all motion for users who prefer it ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

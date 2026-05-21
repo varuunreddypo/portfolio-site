@@ -94,7 +94,7 @@ const headingItemVariants = {
 function ImageCollage({ columns, color }: { columns: Column[]; color: string }) {
   return (
     <div
-      className="flex gap-3 w-full"
+      className="flex gap-3 w-full work-collage"
       style={{ height: "420px", borderRadius: "4px", overflow: "hidden" }}
     >
       {columns.map((col, ci) => (
@@ -297,7 +297,7 @@ export default function WorkSection() {
           </motion.p>
         </motion.div>
 
-        <div className="flex flex-col" style={{ gap: "7rem" }}>
+        <div className="flex flex-col work-projects" style={{ gap: "7rem" }}>
           {projects.map((project, i) => (
             <Fragment key={project.id}>
               {i === 0 ? (
@@ -309,7 +309,7 @@ export default function WorkSection() {
                   style={{ position: "relative" }}
                 >
                   <ProjectEntry project={project} />
-                  <div style={{ position: "absolute", bottom: "-7rem", right: 0, width: "420px", height: "180px", overflow: "hidden", zIndex: 4 }}>
+                  <div className="work-easter-egg" style={{ position: "absolute", bottom: "-7rem", right: 0, width: "420px", height: "180px", overflow: "hidden", zIndex: 4 }}>
                     <CharizardEgg />
                   </div>
                 </motion.div>
@@ -322,7 +322,7 @@ export default function WorkSection() {
                   style={{ position: "relative" }}
                 >
                   <ProjectEntry project={project} />
-                  <div style={{ position: "absolute", bottom: "-7rem", left: "calc(-24px - max(0px, (100vw - 1072px) / 2))", width: "180px", zIndex: 4 }}>
+                  <div className="work-easter-egg" style={{ position: "absolute", bottom: "-7rem", left: "calc(-24px - max(0px, (100vw - 1072px) / 2))", width: "180px", zIndex: 4 }}>
                     <BellsproutBush />
                   </div>
                 </motion.div>
@@ -335,7 +335,7 @@ export default function WorkSection() {
                   style={{ position: "relative" }}
                 >
                   <ProjectEntry project={project} />
-                  <div style={{ position: "absolute", bottom: "-7rem", right: "calc(-24px - max(0px, (100vw - 1072px) / 2))", width: "320px", zIndex: 4 }}>
+                  <div className="work-easter-egg" style={{ position: "absolute", bottom: "-7rem", right: "calc(-24px - max(0px, (100vw - 1072px) / 2))", width: "320px", zIndex: 4 }}>
                     <GengarCave />
                   </div>
                 </motion.div>
@@ -348,7 +348,7 @@ export default function WorkSection() {
                   style={{ position: "relative" }}
                 >
                   <ProjectEntry project={project} />
-                  <div style={{ position: "absolute", bottom: "-7rem", right: "calc(-24px - max(0px, (100vw - 1072px) / 2))", width: "200px", zIndex: 4 }}>
+                  <div className="work-easter-egg" style={{ position: "absolute", bottom: "-7rem", right: "calc(-24px - max(0px, (100vw - 1072px) / 2))", width: "200px", zIndex: 4 }}>
                     <PsyduckEgg />
                   </div>
                 </motion.div>

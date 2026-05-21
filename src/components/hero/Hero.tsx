@@ -412,7 +412,7 @@ export default function Hero() {
             <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#e0a85a" }} />
             <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#5ae07a", animation: "ledPulse 2.5s ease-in-out infinite" }} />
             <div style={{ flex: 1, height: "1px", background: "rgba(255,204,0,.12)" }} />
-            <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "11px", color: "#ffcc00", letterSpacing: "3px", opacity: 0.75 }}>
+            <span className="hero-dex-title" style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "11px", color: "#ffcc00", letterSpacing: "3px", opacity: 0.75 }}>
               POKÉDEX — DESIGNER EDITION
             </span>
             <div style={{ flex: 1, height: "1px", background: "rgba(255,204,0,.12)" }} />
@@ -420,7 +420,7 @@ export default function Hero() {
 
           {/* ── Main panel ── */}
           <div
-            className={borderGlow ? "panel-border-glow" : undefined}
+            className={`hero-panel-grid hero-panel${borderGlow ? " panel-border-glow" : ""}`}
             style={{
               display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "16px",
               background: "rgba(255,255,255,.02)", border: "1px solid rgba(255,204,0,.2)",
@@ -441,7 +441,7 @@ export default function Hero() {
               animationFillMode: "forwards", opacity: 0, willChange: "transform, opacity",
             }}>
               {/* Character photo */}
-              <div style={{ position: "relative", flex: 1, minHeight: "300px", borderRadius: "4px", overflow: "hidden", border: "1px solid rgba(255,204,0,.25)", background: "linear-gradient(160deg,#0d1117 0%,#1a1a2e 60%,#0d0d1a 100%)" }}>
+              <div className="hero-photo-frame" style={{ position: "relative", flex: 1, minHeight: "300px", borderRadius: "4px", overflow: "hidden", border: "1px solid rgba(255,204,0,.25)", background: "linear-gradient(160deg,#0d1117 0%,#1a1a2e 60%,#0d0d1a 100%)" }}>
                 {([["top","left"],["top","right"],["bottom","left"],["bottom","right"]] as [string,string][]).map(([v,h],i) => (
                   <div key={i} style={{ position: "absolute", [v]: "-1px", [h]: "-1px", width: "14px", height: "14px", zIndex: 3,
                     borderTop: v==="top" ? "2px solid #ffcc00" : "none", borderBottom: v==="bottom" ? "2px solid #ffcc00" : "none",
