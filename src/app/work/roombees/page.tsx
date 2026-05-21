@@ -165,13 +165,13 @@ const NAV_SECTIONS = [
 ];
 
 const CAROUSEL_IMAGES = [
-  "/Roombees%20Carousal/Frame%201000005620.png",
-  "/Roombees%20Carousal/Frame%201000005621.png",
-  "/Roombees%20Carousal/Frame%201000005622.png",
-  "/Roombees%20Carousal/Frame%201000005623.png",
-  "/Roombees%20Carousal/Frame%201000005624.png",
-  "/Roombees%20Carousal/Frame%201000005625.png",
-  "/Roombees%20Carousal/Frame%201000005626.png",
+  "/RoomBees%20Carousal/Frame%201000005620.png",
+  "/RoomBees%20Carousal/Frame%201000005621.png",
+  "/RoomBees%20Carousal/Frame%201000005622.png",
+  "/RoomBees%20Carousal/Frame%201000005623.png",
+  "/RoomBees%20Carousal/Frame%201000005624.png",
+  "/RoomBees%20Carousal/Frame%201000005625.png",
+  "/RoomBees%20Carousal/Frame%201000005626.png",
 ];
 
 const FLOW_TABS = [

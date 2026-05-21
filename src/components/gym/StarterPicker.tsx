@@ -96,16 +96,16 @@ export default function StarterPicker({ onPick }: Props) {
               border: '1px solid rgba(255,255,255,0.09)',
               borderRadius: 10,
               cursor: 'pointer',
-              transition: 'background 0.15s, border-color 0.15s, transform 0.12s',
+              transition: mobile ? 'background 0.15s, border-color 0.15s' : 'background 0.15s, border-color 0.15s, transform 0.12s',
               WebkitTapHighlightColor: 'transparent',
               boxSizing: 'border-box',
             }}
-            onMouseEnter={e => {
+            onMouseEnter={mobile ? undefined : e => {
               e.currentTarget.style.background = 'rgba(255,215,0,0.08)';
               e.currentTarget.style.borderColor = 'rgba(255,215,0,0.45)';
               e.currentTarget.style.transform = 'translateY(-2px)';
             }}
-            onMouseLeave={e => {
+            onMouseLeave={mobile ? undefined : e => {
               e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
               e.currentTarget.style.borderColor = 'rgba(255,255,255,0.09)';
               e.currentTarget.style.transform = '';
