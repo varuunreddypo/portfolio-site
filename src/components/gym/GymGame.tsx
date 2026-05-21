@@ -375,7 +375,7 @@ export default function GymGame() {
       </div>
 
       {/* Main grid: sidebar | map+controls */}
-      <div style={{
+      <div className="gym-main-grid" style={{
         flex: 1,
         display: 'grid',
         gridTemplateColumns: '264px 1fr',
@@ -537,7 +537,7 @@ export default function GymGame() {
         </div>
 
         {/* ── MAP + CONTROLS ── */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, minHeight: 0, overflow: 'hidden' }}>
+        <div className="gym-map-col" style={{ display: 'flex', flexDirection: 'column', gap: 16, minHeight: 0, overflow: 'hidden' }}>
 
           {/* Map */}
           <div style={{ flexShrink: 0, overflow: 'auto' }}>
@@ -901,6 +901,10 @@ export default function GymGame() {
       )}
 
       <style>{`
+        @media (max-width: 768px) {
+          .gym-main-grid { grid-template-columns: 1fr !important; overflow-y: auto !important; }
+          .gym-map-col { display: none !important; }
+        }
         @keyframes gymBump {
           0%   { transform: translate(${state.col * tileW}px, ${state.row * tileH}px); }
           40%  { transform: translate(${(state.col + (state.dir === 'right' ? 0.12 : state.dir === 'left' ? -0.12 : 0)) * tileW}px, ${(state.row + (state.dir === 'down' ? 0.12 : state.dir === 'up' ? -0.12 : 0)) * tileH}px); }
