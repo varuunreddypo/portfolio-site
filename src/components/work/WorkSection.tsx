@@ -142,7 +142,7 @@ function ProjectEntry({ project }: { project: Project }) {
     <div className="w-full">
       <ImageCollage columns={project.columns} color={project.color} />
 
-      <div className="mt-7 max-w-3xl">
+      <div className="mt-7 max-w-3xl work-project-meta">
         <div className="flex items-center gap-3 mb-3">
           <h3
             className="font-semibold"
@@ -267,11 +267,21 @@ function ProjectEntry({ project }: { project: Project }) {
 export default function WorkSection() {
   return (
     <section id="work" className="pb-28 px-6" style={{ background: "var(--bg-primary)", paddingTop: "5rem" }}>
+      <style>{`
+        @media (max-width: 640px) {
+          #work { padding-top: 2.5rem !important; padding-bottom: 3rem !important; padding-left: 16px !important; padding-right: 16px !important; }
+          .work-heading { margin-bottom: 2rem !important; }
+          .work-projects { gap: 3rem !important; }
+          .work-collage { height: 200px !important; }
+          .work-easter-egg { display: none !important; }
+          .work-project-meta { margin-top: 1rem !important; }
+        }
+      `}</style>
       <div className="max-w-5xl mx-auto">
 
         {/* Section heading — stagger children */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-20 work-heading"
           variants={headingContainerVariants}
           initial="hidden"
           whileInView="visible"

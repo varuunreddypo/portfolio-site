@@ -337,6 +337,7 @@ export default function Hero() {
         .hero-stat-label { font-family: "Press Start 2P",monospace; font-size: 7px; color: rgba(255,255,255,.45); letter-spacing: 1px; width: 100px; flex-shrink: 0; }
         .hero-move-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
         .hero-name-desktop { display: block; }
+        .hero-bio { order: 0; }
         .hero-name-overlay {
           display: none;
           position: absolute; bottom: 0; left: 0; right: 0; z-index: 4;
@@ -355,6 +356,7 @@ export default function Hero() {
           .hero-section { padding: 72px 14px 20px !important; }
           .hero-name-desktop { display: none; }
           .hero-name-overlay { display: block; }
+          .hero-bio { order: -1; }
         }
       `}</style>
 
@@ -649,7 +651,7 @@ export default function Hero() {
               </div>
 
               {/* Bio — typewriter */}
-              <div style={{
+              <div className="hero-bio" style={{
                 animationName: mounted ? "heroFadeUp" : "none",
                 animationDuration: ".7s", animationDelay: ".6s",
                 animationTimingFunction: "cubic-bezier(0.0,0.0,0.2,1)",
