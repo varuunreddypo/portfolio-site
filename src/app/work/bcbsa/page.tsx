@@ -183,10 +183,12 @@ function BCBSAContent() {
           .cs-side-nav { display: none !important; }
           .cs-nav-title { display: none !important; }
           .cs-hero { padding-top: 90px !important; padding-bottom: 36px !important; padding-left: 16px !important; padding-right: 16px !important; }
-          .cs-stat { padding: 12px 14px !important; }
+          .cs-stats-row { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 2px !important; }
+          .cs-stat { padding: 12px 14px !important; flex: unset !important; }
           .cs-meta-section { padding: 28px 16px !important; }
           .cs-meta-grid { grid-template-columns: 1fr 1fr !important; }
           .cs-meta-cell { padding: 14px 12px !important; }
+          .cs-team-row { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
           .cs-grid-main { grid-template-columns: 1fr !important; gap: 28px !important; }
           .cs-feature-grid { grid-template-columns: 1fr !important; }
           .cs-feature-row { grid-template-columns: 1fr !important; }
@@ -235,7 +237,7 @@ function BCBSAContent() {
             Improving performance, sustainability & user efficiency in a mission-critical healthcare platform.
           </p>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "2px", animation: "fadeUp .7s .4s ease both", opacity: 0, animationFillMode: "forwards" }}>
+          <div className="cs-stats-row" style={{ display: "flex", flexWrap: "wrap", gap: "2px", animation: "fadeUp .7s .4s ease both", opacity: 0, animationFillMode: "forwards" }}>
             {STATS.map((s, i) => (
               <div key={i} className="cs-stat" style={{ flex: "1 1 160px", padding: "24px 28px", background: "rgba(56,189,248,0.04)", border: `1px solid ${BLUE_DIM}`, borderRadius: "2px" }}>
                 <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "clamp(20px,3vw,32px)", color: BLUE, marginBottom: "8px" }}>
@@ -271,7 +273,7 @@ function BCBSAContent() {
             </div>
           ))}
         </div>
-        <div style={{ maxWidth: "1000px", margin: "32px auto 0", display: "flex", flexWrap: "wrap", gap: "10px" }}>
+        <div className="cs-team-row" style={{ maxWidth: "1000px", margin: "32px auto 0", display: "flex", flexWrap: "wrap", gap: "10px" }}>
           {TEAM.map((t) => (
             <div key={t.role} style={{ padding: "10px 16px", borderRadius: "3px", border: `1px solid ${t.highlight ? BLUE : "rgba(255,255,255,0.1)"}`, background: t.highlight ? "rgba(56,189,248,0.06)" : "transparent", display: "flex", gap: "10px", alignItems: "center" }}>
               <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "6px", color: t.highlight ? BLUE : "rgba(255,255,255,0.4)", letterSpacing: "1px" }}>{t.role.toUpperCase()}</span>
