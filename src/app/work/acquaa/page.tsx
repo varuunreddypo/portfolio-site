@@ -202,7 +202,8 @@ export default function AcquaaPage() {
           .cs-side-nav { display: none !important; }
           .cs-nav-title { display: none !important; }
           .cs-hero { padding-top: 90px !important; padding-bottom: 36px !important; padding-left: 16px !important; padding-right: 16px !important; }
-          .cs-stat { padding: 12px 14px !important; }
+          .cs-stats-row { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 2px !important; }
+          .cs-stat { padding: 12px 14px !important; flex: unset !important; }
           .cs-meta-section { padding: 28px 16px !important; }
           .cs-meta-grid { grid-template-columns: 1fr 1fr !important; }
           .cs-meta-cell { padding: 14px 12px !important; }
@@ -257,7 +258,7 @@ export default function AcquaaPage() {
           <p style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "14px", fontStyle: "italic", color: BLUE, opacity: 0.85, maxWidth: "640px", lineHeight: 1.7, marginBottom: "48px", animation: "fadeUp .7s .35s ease both" }}>
             &ldquo;This project demonstrates my ability to design and validate complex enterprise workflows involving payments, accessibility, and operational risk.&rdquo;
           </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "2px", animation: "fadeUp .7s .4s ease both" }}>
+          <div className="cs-stats-row" style={{ display: "flex", flexWrap: "wrap", gap: "2px", animation: "fadeUp .7s .4s ease both" }}>
             {STATS.map((s) => <StatCounter key={s.label} {...s} />)}
           </div>
         </div>
