@@ -211,7 +211,7 @@ export default function AcquaaPage() {
       </nav>
 
       {/* ── Side Nav ── */}
-      <nav style={{ position: "fixed", left: "28px", top: "50%", transform: "translateY(-50%)", zIndex: 40, display: "flex", flexDirection: "column", gap: "6px" }}>
+      <nav className="cs-side-nav" style={{ position: "fixed", left: "28px", top: "50%", transform: "translateY(-50%)", zIndex: 40, display: "flex", flexDirection: "column", gap: "6px" }}>
         {NAV_SECTIONS.map(({ id, label }) => {
           const active = activeSection === id;
           return (
@@ -458,7 +458,7 @@ export default function AcquaaPage() {
                 </div>
                 <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "12px", color: "rgba(255,255,255,0.35)", marginTop: "8px", textAlign: "center" }}>{ADMIN_SCREENS[0].caption}</div>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <div className="cs-grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                 {ADMIN_SCREENS.slice(1).map(({ src, caption }) => (
                   <div key={caption}>
                     <div style={{ borderRadius: "6px", overflow: "hidden", border: `1px solid ${BLUE_DIM}`, background: "#0f0f0f" }}>
@@ -476,7 +476,7 @@ export default function AcquaaPage() {
           <div>
             <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(255,255,255,0.25)", letterSpacing: "3px", marginBottom: "20px" }}>USER SCREENS</div>
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <div className="cs-grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                 {USER_SCREENS.slice(0, 2).map(({ src, caption }) => (
                   <div key={caption}>
                     <div style={{ borderRadius: "6px", overflow: "hidden", border: `1px solid ${BLUE_DIM}`, background: "#0f0f0f" }}>
@@ -546,7 +546,7 @@ export default function AcquaaPage() {
           <h2 style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "clamp(1.3rem,2.2vw,1.8rem)", fontWeight: 700, color: "var(--text-primary)", marginBottom: "40px", lineHeight: 1.3 }}>
             The people behind the work
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          <div className="cs-grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
             {[
               { src: img("me and team 1.png"), caption: "Team collaboration session" },
               { src: img("me and team2.png"),  caption: "Working with the Acquaa team" },

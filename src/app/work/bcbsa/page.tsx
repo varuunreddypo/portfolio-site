@@ -192,7 +192,7 @@ function BCBSAContent() {
       </nav>
 
       {/* ── Side Nav ── */}
-      <nav style={{ position: "fixed", left: "28px", top: "50%", transform: "translateY(-50%)", zIndex: 40, display: "flex", flexDirection: "column", gap: "6px" }}>
+      <nav className="cs-side-nav" style={{ position: "fixed", left: "28px", top: "50%", transform: "translateY(-50%)", zIndex: 40, display: "flex", flexDirection: "column", gap: "6px" }}>
         {NAV_SECTIONS.map(({ id, label }) => {
           const active = activeSection === id;
           return (
@@ -331,7 +331,7 @@ function BCBSAContent() {
 
       {/* ── Constraints & Goal ── */}
       <section id="constraints" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)`, background: "#0d0d0d" }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px" }}>
+        <div className="cs-grid-2col" style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px" }}>
           {/* Constraints */}
           <div>
             <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: BLUE, letterSpacing: "3px", marginBottom: "28px" }}>CONSTRAINTS</div>
@@ -500,7 +500,7 @@ function BCBSAContent() {
 
             {/* Decision 01 */}
             <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "0" }}>
+              <div className="cs-grid-main" style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "0" }}>
                 <div style={{ padding: "44px 40px", background: "#0a0a0a", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
                   <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "32px", color: BLUE, opacity: 0.1, marginBottom: "12px" }}>01</div>
                   <h3 style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "9px", color: "#fff", margin: "0 0 10px", letterSpacing: "1px", lineHeight: 1.8 }}>FIXING THE INFORMATION HIERARCHY</h3>
@@ -533,7 +533,7 @@ function BCBSAContent() {
 
             {/* Decisions 02–04 */}
             {DECISIONS.map((d, i) => (
-              <div key={d.number} style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "0", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <div key={d.number} className="cs-grid-main" style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "0", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
                 <div style={{ padding: "44px 40px", background: i % 2 === 0 ? "#0d0d0d" : "#0a0a0a", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
                   <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "32px", color: d.color, opacity: 0.1, marginBottom: "12px" }}>{d.number}</div>
                   <h3 style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "9px", color: "#fff", margin: "0 0 10px", letterSpacing: "1px", lineHeight: 1.8 }}>{d.title.toUpperCase()}</h3>

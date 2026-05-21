@@ -274,7 +274,7 @@ function RoomBeesContent() {
       </section>
 
       {/* ── Side Nav ── */}
-      <nav style={{ position: "fixed", left: "28px", top: "50%", transform: "translateY(-50%)", zIndex: 40, display: "flex", flexDirection: "column", gap: "6px" }}>
+      <nav className="cs-side-nav" style={{ position: "fixed", left: "28px", top: "50%", transform: "translateY(-50%)", zIndex: 40, display: "flex", flexDirection: "column", gap: "6px" }}>
         {NAV_SECTIONS.map(({ id, label }) => {
           const active = activeSection === id;
           return (
@@ -442,7 +442,7 @@ function RoomBeesContent() {
 
       {/* ── Overview ── */}
       <section id="overview" style={{ padding: "80px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)`, background: "#0d0d0d" }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "64px", alignItems: "start" }}>
+        <div className="cs-grid-main" style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "64px", alignItems: "start" }}>
           <div>
             <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: GOLD, letterSpacing: "3px", marginBottom: "20px" }}>OVERVIEW</div>
             <div style={{ height: "2px", width: "40px", background: GOLD, marginBottom: "20px", opacity: 0.4 }} />
@@ -484,7 +484,7 @@ function RoomBeesContent() {
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(440px,1fr))", gap: "16px", marginTop: "40px" }}>
+          <div className="cs-feature-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(440px,1fr))", gap: "16px", marginTop: "40px" }}>
             {RESEARCH_INSIGHTS.map((insight, i) => (
               <div key={i} style={{ padding: "28px 32px", background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "4px", display: "flex", gap: "20px", alignItems: "flex-start" }}>
                 <span style={{ fontSize: "28px", flexShrink: 0, lineHeight: 1 }}>{insight.emoji}</span>
@@ -510,7 +510,7 @@ function RoomBeesContent() {
             {FEATURES.map((f, i) => {
               const imgLeft = i % 2 === 0;
               return (
-                <div key={f.number} style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "0", borderTop: `1px solid rgba(255,255,255,0.06)` }}>
+                <div key={f.number} className="cs-feature-row cs-grid-main" style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "0", borderTop: `1px solid rgba(255,255,255,0.06)` }}>
                   {/* Phone image */}
                   <div style={{ order: imgLeft ? 0 : 1, background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 32px", borderRight: imgLeft ? `1px solid rgba(255,255,255,0.06)` : "none", borderLeft: imgLeft ? "none" : `1px solid rgba(255,255,255,0.06)` }}>
                     <div style={{ position: "relative", maxWidth: "200px", width: "100%" }}>
