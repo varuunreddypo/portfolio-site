@@ -179,6 +179,18 @@ function BCBSAContent() {
       <style>{`
         @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
         .fade-up { animation: fadeUp .7s ease both; }
+        @media (max-width: 640px) {
+          .cs-side-nav { display: none !important; }
+          .cs-nav-title { display: none !important; }
+          .cs-hero { padding-top: 90px !important; padding-bottom: 36px !important; padding-left: 16px !important; padding-right: 16px !important; }
+          .cs-stat { padding: 12px 14px !important; }
+          .cs-meta-section { padding: 28px 16px !important; }
+          .cs-meta-grid { grid-template-columns: 1fr 1fr !important; }
+          .cs-meta-cell { padding: 14px 12px !important; }
+          .cs-grid-main { grid-template-columns: 1fr !important; gap: 28px !important; }
+          .cs-feature-grid { grid-template-columns: 1fr !important; }
+          .cs-feature-row { grid-template-columns: 1fr !important; }
+        }
       `}</style>
 
       {/* ── Navbar ── */}
@@ -187,7 +199,7 @@ function BCBSAContent() {
           <span style={{ display: "block", lineHeight: "1", fontSize: "14px", transform: "translateY(-4px)" }}>←</span>
           <span style={{ display: "block", lineHeight: "1" }}>BACK</span>
         </a>
-        <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: `rgba(56,189,248,0.4)`, letterSpacing: "3px" }}>BCBSA — CASE STUDY</span>
+        <span className="cs-nav-title" style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: `rgba(56,189,248,0.4)`, letterSpacing: "3px" }}>BCBSA — CASE STUDY</span>
         <div style={{ width: "80px" }} />
       </nav>
 
@@ -208,7 +220,7 @@ function BCBSAContent() {
       </nav>
 
       {/* ── Hero ── */}
-      <section style={{ paddingTop: "140px", paddingBottom: "80px", paddingLeft: "24px", paddingRight: "24px", position: "relative", overflow: "hidden", borderBottom: `1px solid ${BLUE_DIM}` }}>
+      <section className="cs-hero" style={{ paddingTop: "140px", paddingBottom: "80px", paddingLeft: "24px", paddingRight: "24px", position: "relative", overflow: "hidden", borderBottom: `1px solid ${BLUE_DIM}` }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${BLUE_GLOW} 1px,transparent 1px),linear-gradient(90deg,${BLUE_GLOW} 1px,transparent 1px)`, backgroundSize: "48px 48px", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "10%", left: "50%", transform: "translateX(-50%)", width: "600px", height: "300px", background: `radial-gradient(ellipse,rgba(56,189,248,0.07) 0%,transparent 70%)`, pointerEvents: "none" }} />
 
@@ -225,7 +237,7 @@ function BCBSAContent() {
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: "2px", animation: "fadeUp .7s .4s ease both", opacity: 0, animationFillMode: "forwards" }}>
             {STATS.map((s, i) => (
-              <div key={i} style={{ flex: "1 1 160px", padding: "24px 28px", background: "rgba(56,189,248,0.04)", border: `1px solid ${BLUE_DIM}`, borderRadius: "2px" }}>
+              <div key={i} className="cs-stat" style={{ flex: "1 1 160px", padding: "24px 28px", background: "rgba(56,189,248,0.04)", border: `1px solid ${BLUE_DIM}`, borderRadius: "2px" }}>
                 <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "clamp(20px,3vw,32px)", color: BLUE, marginBottom: "8px" }}>
                   <StatCounter value={s.value} suffix={s.suffix} />
                 </div>
@@ -245,15 +257,15 @@ function BCBSAContent() {
       </div>
 
       {/* ── Project Meta ── */}
-      <section style={{ padding: "72px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: "1px", background: "rgba(255,255,255,0.06)", borderRadius: "4px", overflow: "hidden" }}>
+      <section className="cs-meta-section" style={{ padding: "72px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
+        <div className="cs-meta-grid" style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: "1px", background: "rgba(255,255,255,0.06)", borderRadius: "4px", overflow: "hidden" }}>
           {[
             { label: "Role", value: "UX Engineer" },
             { label: "Timeline", value: "Jan 2024 – Jan 2025" },
             { label: "Project Type", value: "Report-driven Platform" },
             { label: "Client", value: "Blue Cross Blue Shield" },
           ].map((item) => (
-            <div key={item.label} style={{ padding: "32px 28px", background: "#0f0f0f" }}>
+            <div key={item.label} className="cs-meta-cell" style={{ padding: "32px 28px", background: "#0f0f0f" }}>
               <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: `rgba(56,189,248,0.5)`, letterSpacing: "2px", marginBottom: "12px" }}>{item.label.toUpperCase()}</div>
               <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "#f0f0f0", fontWeight: 600 }}>{item.value}</div>
             </div>

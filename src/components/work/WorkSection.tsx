@@ -150,7 +150,7 @@ function ProjectEntry({ project }: { project: Project }) {
           >
             {project.title}
           </h3>
-          {project.liveHref ? (
+          {project.liveHref && (
             <motion.a
               href={project.liveHref}
               target="_blank"
@@ -164,10 +164,6 @@ function ProjectEntry({ project }: { project: Project }) {
                 <path d="M2 12L12 2M12 2H6M12 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </motion.a>
-          ) : (
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: "var(--text-muted)", flexShrink: 0 }}>
-              <path d="M2 12L12 2M12 2H6M12 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
           )}
         </div>
 

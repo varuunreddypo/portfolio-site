@@ -79,26 +79,6 @@ const FEATURES = [
   },
 ];
 
-const ITERATIONS = [
-  {
-    number: "01",
-    title: "The Bank Details Pop-up",
-    problem: "In usability testing, 12 out of 20 users dropped off immediately after tapping \"Place\" to post a property. The pop-up title \"Bank Details Not Found\" read as an error, and neither CTA made it clear they could continue without adding bank details.",
-    fix: "The solution was entirely in language and framing — three small changes with big impact. Reframing the title from an error state to an optional prompt, and making the skip action obvious, eliminated the friction entirely.",
-    stat: "60%",
-    statLabel: "drop-off rate eliminated after rework",
-    quote: "After this change, we observed a significant improvement in completion rate.",
-  },
-  {
-    number: "02",
-    title: "Reducing Signup Friction",
-    problem: "The original signup flow required users to complete three dense screens before creating an account — personal details, photos, bios, university, lifestyle habits, personality traits, career info, and roommate preferences. Users had no motivation to invest that much effort upfront — they hadn't yet experienced the platform's value.",
-    fix: "Stripped signup down to a single screen. Users now only provide what's essential: photos, name, date of birth, gender, nationality, and target location. All deeper profile information was relocated to the roommate listing flow — a dedicated 3-step process users go through only when they actively choose to post themselves.",
-    stat: "1",
-    statLabel: "screen to sign up, down from 3 dense screens",
-    quote: "I could actually see someone's lifestyle and habits before reaching out. I matched with my current roommate in three days. — Student, Indiana University Indianapolis",
-  },
-];
 
 const LEARNINGS = [
   {
@@ -229,6 +209,18 @@ function RoomBeesContent() {
         @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
         .fade-up { animation: fadeUp .7s ease both; }
+        @media (max-width: 640px) {
+          .cs-side-nav { display: none !important; }
+          .cs-nav-title { display: none !important; }
+          .cs-hero { padding-top: 90px !important; padding-bottom: 36px !important; padding-left: 16px !important; padding-right: 16px !important; }
+          .cs-stat { padding: 12px 14px !important; }
+          .cs-meta-section { padding: 28px 16px !important; }
+          .cs-meta-grid { grid-template-columns: 1fr 1fr !important; }
+          .cs-meta-cell { padding: 14px 12px !important; }
+          .cs-grid-main { grid-template-columns: 1fr !important; gap: 28px !important; }
+          .cs-feature-grid { grid-template-columns: 1fr !important; }
+          .cs-feature-row { grid-template-columns: 1fr !important; }
+        }
       `}</style>
 
       {/* ── Navbar ── */}
@@ -237,12 +229,12 @@ function RoomBeesContent() {
           <span style={{ display: "block", lineHeight: "1", fontSize: "14px", transform: "translateY(-4px)" }}>←</span>
           <span style={{ display: "block", lineHeight: "1" }}>BACK</span>
         </a>
-        <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(255,215,0,0.4)", letterSpacing: "3px" }}>ROOMBEES — CASE STUDY</span>
+        <span className="cs-nav-title" style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(255,215,0,0.4)", letterSpacing: "3px" }}>ROOMBEES — CASE STUDY</span>
         <a href="https://www.roombees.com" target="_blank" rel="noopener noreferrer" style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: GOLD, textDecoration: "none", letterSpacing: "1px", padding: "8px 14px", border: `1px solid ${GOLD_DIM}`, borderRadius: "2px" }}>LIVE SITE ↗</a>
       </nav>
 
       {/* ── Hero ── */}
-      <section style={{ paddingTop: "140px", paddingBottom: "80px", paddingLeft: "24px", paddingRight: "24px", position: "relative", overflow: "hidden", borderBottom: `1px solid ${GOLD_DIM}` }}>
+      <section className="cs-hero" style={{ paddingTop: "140px", paddingBottom: "80px", paddingLeft: "24px", paddingRight: "24px", position: "relative", overflow: "hidden", borderBottom: `1px solid ${GOLD_DIM}` }}>
         {/* Background grid */}
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${GOLD_GLOW} 1px,transparent 1px),linear-gradient(90deg,${GOLD_GLOW} 1px,transparent 1px)`, backgroundSize: "48px 48px", pointerEvents: "none" }} />
         {/* Glow blob */}
@@ -262,7 +254,7 @@ function RoomBeesContent() {
           {/* Stat row */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "2px", animation: "fadeUp .7s .4s ease both", opacity: 0, animationFillMode: "forwards" }}>
             {STATS.map((s, i) => (
-              <div key={i} style={{ flex: "1 1 160px", padding: "24px 28px", background: "rgba(255,215,0,0.04)", border: `1px solid ${GOLD_DIM}`, borderRadius: "2px" }}>
+              <div key={i} className="cs-stat" style={{ flex: "1 1 160px", padding: "24px 28px", background: "rgba(255,215,0,0.04)", border: `1px solid ${GOLD_DIM}`, borderRadius: "2px" }}>
                 <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "clamp(20px,3vw,32px)", color: GOLD, marginBottom: "8px" }}>
                   <StatCounter value={s.value} suffix={s.suffix} />
                 </div>
@@ -414,15 +406,15 @@ function RoomBeesContent() {
 
 
       {/* ── Project Meta ── */}
-      <section id="meta" style={{ padding: "72px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: "1px", background: "rgba(255,255,255,0.06)", borderRadius: "4px", overflow: "hidden" }}>
+      <section id="meta" className="cs-meta-section" style={{ padding: "72px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
+        <div className="cs-meta-grid" style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: "1px", background: "rgba(255,255,255,0.06)", borderRadius: "4px", overflow: "hidden" }}>
           {[
             { label: "Role", value: "Chief Designer" },
             { label: "Timeline", value: "19 Months (Jun '24 – Dec '25)" },
             { label: "Platforms", value: "Web · Android · iOS" },
             { label: "Team Size", value: "11 Members" },
           ].map((item) => (
-            <div key={item.label} style={{ padding: "32px 28px", background: "#0f0f0f" }}>
+            <div key={item.label} className="cs-meta-cell" style={{ padding: "32px 28px", background: "#0f0f0f" }}>
               <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(255,215,0,0.5)", letterSpacing: "2px", marginBottom: "12px" }}>{item.label.toUpperCase()}</div>
               <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "#f0f0f0", fontWeight: 600 }}>{item.value}</div>
             </div>
