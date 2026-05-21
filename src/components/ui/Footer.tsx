@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function Footer() {
@@ -13,16 +14,17 @@ export default function Footer() {
       transition={{ duration: 0.55, ease: [0, 0, 0.2, 1] }}
     >
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <motion.span
-          className="font-pixel text-xs"
-          style={{ color: "var(--accent)" }}
+        <motion.a
+          href="/#about"
+          aria-label="Back to top"
           initial={{ opacity: 0, x: -12 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45, delay: 0.1, ease: [0, 0, 0.2, 1] }}
+          style={{ display: "inline-block" }}
         >
-          VR
-        </motion.span>
+          <Image src="/logo.png" alt="VR Logo" width={36} height={36} style={{ height: "36px", width: "auto", opacity: 0.75 }} />
+        </motion.a>
         <motion.p
           className="text-sm"
           style={{ color: "var(--text-muted)" }}
@@ -31,7 +33,7 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 0.45, delay: 0.15, ease: [0, 0, 0.2, 1] }}
         >
-          Designed &amp; built by Varuun Reddy · Dallas, TX
+          Designed &amp; built by Varuun Reddy
         </motion.p>
         <motion.div
           className="flex gap-6"
