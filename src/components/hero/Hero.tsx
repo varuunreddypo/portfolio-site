@@ -290,7 +290,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef}
+    <section id="about" ref={sectionRef} className="hero-section"
       style={{
         background: "#09091a", minHeight: "100vh",
         display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
@@ -330,6 +330,31 @@ export default function Hero() {
 
         .panel-border-glow {
           animation: borderGlowPulse 0.55s cubic-bezier(0.0,0.0,0.2,1) forwards;
+        }
+
+        .hero-panel-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 16px; }
+        .hero-panel { padding: 28px; }
+        .hero-stat-label { font-family: "Press Start 2P",monospace; font-size: 7px; color: rgba(255,255,255,.45); letter-spacing: 1px; width: 100px; flex-shrink: 0; }
+        .hero-move-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .hero-name-desktop { display: block; }
+        .hero-name-overlay {
+          display: none;
+          position: absolute; bottom: 0; left: 0; right: 0; z-index: 4;
+          padding: 48px 14px 14px;
+          background: linear-gradient(to bottom, transparent 0%, rgba(9,9,26,0.82) 55%, rgba(9,9,26,0.97) 100%);
+        }
+
+        @media (max-width: 700px) {
+          .hero-panel-grid { grid-template-columns: 1fr; gap: 12px; }
+          .hero-panel { padding: 14px; }
+          .hero-dex-title { display: none; }
+          .hero-stat-label { width: 72px; font-size: 6px !important; }
+          .hero-move-grid { grid-template-columns: 1fr 1fr; }
+          .hero-photo-frame { min-height: 220px !important; }
+          .hero-badge { min-width: 72px !important; font-size: 7px !important; padding: 4px 10px !important; }
+          .hero-section { padding: 72px 14px 20px !important; }
+          .hero-name-desktop { display: none; }
+          .hero-name-overlay { display: block; }
         }
       `}</style>
 
@@ -422,9 +447,8 @@ export default function Hero() {
           <div
             className={`hero-panel-grid hero-panel${borderGlow ? " panel-border-glow" : ""}`}
             style={{
-              display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "16px",
               background: "rgba(255,255,255,.02)", border: "1px solid rgba(255,204,0,.2)",
-              borderRadius: "8px", padding: "28px", position: "relative",
+              borderRadius: "8px", position: "relative",
               boxShadow: "0 0 60px rgba(255,204,0,.06), inset 0 0 40px rgba(0,0,0,.3)",
             }}>
             {/* Corner screws */}
@@ -453,6 +477,20 @@ export default function Hero() {
                 <img src="/hero-photo.png" alt="Varuun Reddy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", zIndex: 1 }} />
                 <div style={{ position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
                   background: "radial-gradient(ellipse at center, transparent 50%, rgba(8,12,28,0.3) 85%, rgba(8,12,28,0.55) 100%), linear-gradient(to bottom, rgba(9,9,26,0.0) 0%, rgba(9,9,26,0.25) 100%)" }} />
+                {/* Mobile-only name overlay */}
+                <div className="hero-name-overlay">
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}>
+                    <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "9px", color: "rgba(255,204,0,.6)", letterSpacing: "2px" }}>NO.001</span>
+                    <div style={{ flex: 1, height: "1px", background: "rgba(255,204,0,.2)" }} />
+                  </div>
+                  <h1 style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "clamp(15px,5vw,22px)", color: "#fff", letterSpacing: "2px", lineHeight: 1.15, margin: 0, textShadow: "0 0 20px rgba(255,204,0,.35)" }}>
+                    VARUUN REDDY
+                  </h1>
+                  <p style={{ fontFamily: '"Space Mono",monospace', fontSize: "11px", color: "#ffcc00", letterSpacing: "3px", marginTop: "5px", opacity: 0.85, minHeight: "16px", marginBottom: 0 }}>
+                    {roleText}
+                    <span style={{ display: "inline-block", width: "2px", height: "11px", background: "#ffcc00", marginLeft: "3px", verticalAlign: "middle", animation: "blinkCursor .7s step-end infinite" }} />
+                  </p>
+                </div>
               </div>
 
               {/* Trainer ID card */}
@@ -466,16 +504,16 @@ export default function Hero() {
                   { label: "STATUS",     val: "OPEN TO WORK", sub: null,             isStatus: true  },
                 ].map(({ label, val, sub, isStatus }, i, arr) => (
                   <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 12px", borderBottom: i < arr.length - 1 ? "1px solid rgba(255,204,0,.06)" : "none" }}>
-                    <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: "rgba(255,204,0,.45)", letterSpacing: "1px" }}>{label}</span>
+                    <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "6px", color: "rgba(255,204,0,.45)", letterSpacing: "1px" }}>{label}</span>
                     {isStatus ? (
                       <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                        <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#4ade80", flexShrink: 0, animation: "statusPulse 2s ease-in-out infinite" }} />
-                        <span style={{ fontFamily: '"Space Mono",monospace', fontSize: "13px", color: "#4ade80", fontWeight: 700, letterSpacing: "0.5px" }}>{val}</span>
+                        <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#4ade80", flexShrink: 0, animation: "statusPulse 2s ease-in-out infinite" }} />
+                        <span style={{ fontFamily: '"Space Mono",monospace', fontSize: "11px", color: "#4ade80", fontWeight: 700, letterSpacing: "0.5px" }}>{val}</span>
                       </span>
                     ) : (
                       <div style={{ textAlign: "right" }}>
-                        <div style={{ fontFamily: '"Space Mono",monospace', fontSize: "13px", color: "rgba(255,255,255,.75)", fontWeight: 700, letterSpacing: "0.5px" }}>{val}</div>
-                        {sub && <div style={{ fontFamily: '"Space Mono",monospace', fontSize: "11px", color: "rgba(255,255,255,.35)", marginTop: "1px" }}>{sub}</div>}
+                        <div style={{ fontFamily: '"Space Mono",monospace', fontSize: "11px", color: "rgba(255,255,255,.75)", fontWeight: 700, letterSpacing: "0.5px" }}>{val}</div>
+                        {sub && <div style={{ fontFamily: '"Space Mono",monospace', fontSize: "9px", color: "rgba(255,255,255,.35)", marginTop: "1px" }}>{sub}</div>}
                       </div>
                     )}
                   </div>
@@ -487,7 +525,7 @@ export default function Hero() {
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
 
               {/* Name + cycling role */}
-              <div style={{
+              <div className="hero-name-desktop" style={{
                 animationName: mounted ? "heroFadeUp" : "none",
                 animationDuration: ".7s", animationDelay: ".2s",
                 animationTimingFunction: "cubic-bezier(0.0,0.0,0.2,1)",
@@ -516,7 +554,7 @@ export default function Hero() {
                 <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: "rgba(255,255,255,.3)", letterSpacing: "3px", marginBottom: "6px" }}>EXPERTISE</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
                   {DOMAINS.map((d, i) => (
-                    <span key={d.label}
+                    <span key={d.label} className="hero-badge"
                       onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = "scale(1.06)"; el.style.boxShadow = `0 0 12px ${d.color}55`; }}
                       onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.transform = "scale(1)"; el.style.boxShadow = "none"; }}
                       style={{
@@ -549,7 +587,7 @@ export default function Hero() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
                   {STATS.map((s, i) => (
                     <div key={s.name} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(255,255,255,.45)", letterSpacing: "1px", width: "100px", flexShrink: 0 }}>{s.name}</span>
+                      <span className="hero-stat-label">{s.name}</span>
                       <div style={{ flex: 1, position: "relative" }}>
                         <div style={{ height: "6px", background: "rgba(255,255,255,.06)", borderRadius: "3px", overflow: "hidden" }}>
                           <div style={{
@@ -580,7 +618,7 @@ export default function Hero() {
                 animationFillMode: "forwards", opacity: 0, willChange: "transform, opacity",
               }}>
                 <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "8px", color: "rgba(255,255,255,.3)", letterSpacing: "3px", marginBottom: "6px" }}>MOVE SET</div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
+                <div className="hero-move-grid">
                   {MOVES.map((m, i) => (
                     <div key={m.name}
                       onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = "translateY(-2px)"; el.style.borderColor = `${m.color}77`; el.style.boxShadow = `0 4px 14px ${m.color}22`; }}
