@@ -151,6 +151,9 @@ export default function VisitorGallery() {
     <section id="visitors" className="py-16 px-6" style={{ background: "var(--bg-secondary)" }}>
       <style>{`
         @keyframes vgFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) {
+          .vg-card-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+        }
       `}</style>
       <div className="max-w-5xl mx-auto">
 
@@ -248,7 +251,7 @@ export default function VisitorGallery() {
         </div>
 
         {/* ── Card grid ── */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(180px,1fr))", gap: "14px" }}>
+        <div className="vg-card-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(180px,1fr))", gap: "14px" }}>
           {visibleCards.map((card, i) => (
             <div key={card.id} style={{ animation: `vgFadeUp .4s ${Math.min(i, PAGE_SIZE - 1) * 0.04}s ease both` }}>
               <MiniCard card={card} />
