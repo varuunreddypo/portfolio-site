@@ -144,7 +144,7 @@ function StatCounter({ value, suffix, label }: { value: number; suffix: string; 
       <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "clamp(20px,3vw,32px)", color: BLUE, marginBottom: "8px" }}>
         {count}{suffix}
       </div>
-      <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "12px", color: "rgba(255,255,255,0.4)", letterSpacing: "2px", textTransform: "uppercase" }}>{label}</div>
+      <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "clamp(10px,1.8vw,12px)", color: "rgba(255,255,255,0.4)", letterSpacing: "2px", textTransform: "uppercase" }}>{label}</div>
     </div>
   );
 }
@@ -325,8 +325,8 @@ export default function AcquaaPage() {
         <div className="cs-meta-grid" style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: "1px", background: "rgba(255,255,255,0.06)", borderRadius: "4px", overflow: "hidden" }}>
           {TEAM.map(({ label, value }) => (
             <div key={label} className="cs-meta-cell" style={{ padding: "32px 28px", background: "#0f0f0f" }}>
-              <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(96,165,250,0.5)", letterSpacing: "2px", marginBottom: "12px" }}>{label}</div>
-              <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "#f0f0f0", fontWeight: 600 }}>{value}</div>
+              <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "clamp(6px,1.2vw,7px)", color: "rgba(96,165,250,0.5)", letterSpacing: "2px", marginBottom: "12px" }}>{label}</div>
+              <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "clamp(11px,2vw,15px)", color: "#f0f0f0", fontWeight: 600, wordBreak: "break-word" }}>{value}</div>
             </div>
           ))}
         </div>

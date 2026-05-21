@@ -189,6 +189,7 @@ function BCBSAContent() {
           .cs-meta-grid { grid-template-columns: 1fr 1fr !important; }
           .cs-meta-cell { padding: 14px 12px !important; }
           .cs-team-row { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+          .cs-team-badge { flex-direction: column !important; align-items: flex-start !important; gap: 3px !important; padding: 8px 10px !important; }
           .cs-grid-main { grid-template-columns: 1fr !important; gap: 28px !important; }
           .cs-feature-grid { grid-template-columns: 1fr !important; }
           .cs-feature-row { grid-template-columns: 1fr !important; }
@@ -243,7 +244,7 @@ function BCBSAContent() {
                 <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "clamp(20px,3vw,32px)", color: BLUE, marginBottom: "8px" }}>
                   <StatCounter value={s.value} suffix={s.suffix} />
                 </div>
-                <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "12px", color: "rgba(255,255,255,0.4)", letterSpacing: "2px", textTransform: "uppercase" }}>{s.label}</div>
+                <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "clamp(10px,1.8vw,12px)", color: "rgba(255,255,255,0.4)", letterSpacing: "2px", textTransform: "uppercase" }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -268,16 +269,16 @@ function BCBSAContent() {
             { label: "Client", value: "Blue Cross Blue Shield" },
           ].map((item) => (
             <div key={item.label} className="cs-meta-cell" style={{ padding: "32px 28px", background: "#0f0f0f" }}>
-              <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: `rgba(56,189,248,0.5)`, letterSpacing: "2px", marginBottom: "12px" }}>{item.label.toUpperCase()}</div>
-              <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "#f0f0f0", fontWeight: 600 }}>{item.value}</div>
+              <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "clamp(6px,1.2vw,7px)", color: `rgba(56,189,248,0.5)`, letterSpacing: "2px", marginBottom: "12px" }}>{item.label.toUpperCase()}</div>
+              <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "clamp(11px,2vw,15px)", color: "#f0f0f0", fontWeight: 600, wordBreak: "break-word" }}>{item.value}</div>
             </div>
           ))}
         </div>
         <div className="cs-team-row" style={{ maxWidth: "1000px", margin: "32px auto 0", display: "flex", flexWrap: "wrap", gap: "10px" }}>
           {TEAM.map((t) => (
-            <div key={t.role} style={{ padding: "10px 16px", borderRadius: "3px", border: `1px solid ${t.highlight ? BLUE : "rgba(255,255,255,0.1)"}`, background: t.highlight ? "rgba(56,189,248,0.06)" : "transparent", display: "flex", gap: "10px", alignItems: "center" }}>
-              <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "6px", color: t.highlight ? BLUE : "rgba(255,255,255,0.4)", letterSpacing: "1px" }}>{t.role.toUpperCase()}</span>
-              <span style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "12px", color: t.highlight ? "#fff" : "rgba(255,255,255,0.5)", fontWeight: 600 }}>{t.name}</span>
+            <div key={t.role} className="cs-team-badge" style={{ padding: "10px 16px", borderRadius: "3px", border: `1px solid ${t.highlight ? BLUE : "rgba(255,255,255,0.1)"}`, background: t.highlight ? "rgba(56,189,248,0.06)" : "transparent", display: "flex", gap: "10px", alignItems: "center" }}>
+              <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "clamp(5px,1vw,6px)", color: t.highlight ? BLUE : "rgba(255,255,255,0.4)", letterSpacing: "1px" }}>{t.role.toUpperCase()}</span>
+              <span style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "clamp(10px,2vw,12px)", color: t.highlight ? "#fff" : "rgba(255,255,255,0.5)", fontWeight: 600, wordBreak: "break-word", minWidth: 0 }}>{t.name}</span>
             </div>
           ))}
         </div>
