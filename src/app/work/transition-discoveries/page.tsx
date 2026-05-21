@@ -184,7 +184,7 @@ function StatCounter({ value, suffix, label }: { value: number; suffix: string; 
   }, [value]);
 
   return (
-    <div ref={ref} style={{ flex: "1 1 160px", padding: "24px 28px", background: `${PURPLE_GLOW}`, border: `1px solid ${PURPLE_DIM}`, borderRadius: "2px" }}>
+    <div ref={ref} className="cs-stat" style={{ flex: "1 1 160px", padding: "24px 28px", background: `${PURPLE_GLOW}`, border: `1px solid ${PURPLE_DIM}`, borderRadius: "2px" }}>
       <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "clamp(20px,3vw,32px)", color: PURPLE, marginBottom: "8px" }}>
         {count}{suffix}
       </div>
@@ -227,6 +227,18 @@ export default function TransitionDiscoveriesPage() {
         @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
         @keyframes heroReveal { from{opacity:0;transform:translateY(24px) scale(0.98)} to{opacity:1;transform:translateY(0) scale(1)} }
         .fade-up { animation: fadeUp .7s ease both; }
+        @media (max-width: 640px) {
+          .cs-side-nav { display: none !important; }
+          .cs-nav-title { display: none !important; }
+          .cs-hero { padding-top: 90px !important; padding-bottom: 36px !important; padding-left: 16px !important; padding-right: 16px !important; }
+          .cs-stat { padding: 12px 14px !important; }
+          .cs-meta-section { padding: 28px 16px !important; }
+          .cs-meta-grid { grid-template-columns: 1fr 1fr !important; }
+          .cs-meta-cell { padding: 14px 12px !important; }
+          .cs-grid-main { grid-template-columns: 1fr !important; gap: 28px !important; }
+          .cs-feature-grid { grid-template-columns: 1fr !important; }
+          .cs-feature-row { grid-template-columns: 1fr !important; }
+        }
       `}</style>
 
       {/* ── Navbar ── */}
@@ -235,7 +247,7 @@ export default function TransitionDiscoveriesPage() {
           <span style={{ display: "block", lineHeight: "1", fontSize: "14px", transform: "translateY(-4px)" }}>←</span>
           <span style={{ display: "block", lineHeight: "1" }}>BACK</span>
         </a>
-        <span style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(52,211,153,0.4)", letterSpacing: "3px" }}>TRANSITION DISCOVERIES — CASE STUDY</span>
+        <span className="cs-nav-title" style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "rgba(52,211,153,0.4)", letterSpacing: "3px" }}>TRANSITION DISCOVERIES — CASE STUDY</span>
         <a href="https://www.transitiondiscoveries.org" target="_blank" rel="noopener noreferrer"
           style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: PURPLE, textDecoration: "none", letterSpacing: "1px", padding: "8px 14px", border: `1px solid ${PURPLE_DIM}`, borderRadius: "2px" }}>
           LIVE SITE ↗
@@ -259,7 +271,7 @@ export default function TransitionDiscoveriesPage() {
       </nav>
 
       {/* ── Hero ── */}
-      <section style={{ paddingTop: "140px", paddingBottom: "80px", paddingLeft: "24px", paddingRight: "24px", position: "relative", overflow: "hidden", borderBottom: `1px solid ${PURPLE_DIM}` }}>
+      <section className="cs-hero" style={{ paddingTop: "140px", paddingBottom: "80px", paddingLeft: "24px", paddingRight: "24px", position: "relative", overflow: "hidden", borderBottom: `1px solid ${PURPLE_DIM}` }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${PURPLE_GLOW} 1px,transparent 1px),linear-gradient(90deg,${PURPLE_GLOW} 1px,transparent 1px)`, backgroundSize: "48px 48px", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "10%", left: "50%", transform: "translateX(-50%)", width: "600px", height: "300px", background: "radial-gradient(ellipse,rgba(52,211,153,0.07) 0%,transparent 70%)", pointerEvents: "none" }} />
 
@@ -289,15 +301,15 @@ export default function TransitionDiscoveriesPage() {
       </div>
 
       {/* ── Project Meta ── */}
-      <section style={{ padding: "72px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: "1px", background: "rgba(255,255,255,0.06)", borderRadius: "4px", overflow: "hidden" }}>
+      <section className="cs-meta-section" style={{ padding: "72px 24px", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
+        <div className="cs-meta-grid" style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: "1px", background: "rgba(255,255,255,0.06)", borderRadius: "4px", overflow: "hidden" }}>
           {[
             { label: "ROLE", value: "UX Researcher · UX Designer · UI Designer" },
             { label: "TIMELINE", value: "1 Year" },
             { label: "TEAM", value: "4 Product Designers" },
             { label: "TYPE", value: "EdTech / Nonprofit" },
           ].map(({ label, value }) => (
-            <div key={label} style={{ padding: "32px 28px", background: "#0f0f0f" }}>
+            <div key={label} className="cs-meta-cell" style={{ padding: "32px 28px", background: "#0f0f0f" }}>
               <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: `rgba(52,211,153,0.5)`, letterSpacing: "2px", marginBottom: "12px" }}>{label}</div>
               <div style={{ fontFamily: "var(--font-display,sans-serif)", fontSize: "15px", color: "#f0f0f0", fontWeight: 600 }}>{value}</div>
             </div>
