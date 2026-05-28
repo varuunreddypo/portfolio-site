@@ -263,6 +263,9 @@ export default function Hero() {
           .hero-blob { filter: none !important; }
           /* Faster toggle transition on mobile */
           .hero-mode-layer { transition-duration: 350ms !important; }
+          /* Wider clouds on mobile so the SVG scales taller */
+          .hero-cloud-l { width: 180% !important; left: -15% !important; }
+          .hero-cloud-r { width: 180% !important; right: -15% !important; }
         }
         @media (prefers-reduced-motion: reduce) {
           .hero-headline, .hero-tagline { animation: none; }
@@ -304,13 +307,13 @@ export default function Hero() {
           }}
         />
         {/* White clouds — bottom terrain, left side */}
-        <div style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/white clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftL 60s ease-in-out infinite", flexShrink:0 }} />
         </div>
         {/* White clouds — bottom terrain, right side */}
-        <div style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/white clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 2s infinite", flexShrink:0 }} />
@@ -332,13 +335,13 @@ export default function Hero() {
           }}
         />
         {/* Dark clouds — bottom terrain, left side */}
-        <div style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/dark clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"darkCloudDrift 60s ease-in-out infinite", flexShrink:0 }} />
         </div>
         {/* Dark clouds — bottom terrain, right side */}
-        <div style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/dark clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 2s infinite", flexShrink:0 }} />
@@ -476,7 +479,7 @@ export default function Hero() {
         transition:"background 700ms ease",
         borderTop: isPoke ? "1px solid rgba(251,191,36,0.15)" : "1px solid rgba(255,255,255,0.1)",
       }}>
-        <div style={{ display:"flex", width:"max-content", animation:"marqueeScroll 28s linear infinite" }}>
+        <div style={{ display:"flex", width:"max-content", animation:"marqueeScroll 28s linear infinite", willChange:"transform" }}>
           {marqueeItems.map((skill, i) => (
             <span key={i} style={{
               display:"inline-flex", alignItems:"center",
