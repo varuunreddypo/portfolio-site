@@ -266,6 +266,11 @@ export default function Hero() {
           /* Wider clouds on mobile so the SVG scales taller */
           .hero-cloud-l { width: 180% !important; left: -15% !important; }
           .hero-cloud-r { width: 180% !important; right: -15% !important; }
+          /* Responsive CTA buttons */
+          .hero-cta { font-size: 9px !important; padding: 10px 14px !important; gap: 5px !important; }
+          /* Responsive logos */
+          .hero-logos { gap: 10px !important; margin-top: 14px !important; }
+          .hero-logo-btn { width: 36px !important; height: 36px !important; }
         }
         @media (prefers-reduced-motion: reduce) {
           .hero-headline, .hero-tagline { animation: none; }
@@ -307,13 +312,13 @@ export default function Hero() {
           }}
         />
         {/* White clouds — bottom terrain, left side */}
-        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/white clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftL 60s ease-in-out infinite", flexShrink:0 }} />
         </div>
         {/* White clouds — bottom terrain, right side */}
-        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/white clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 2s infinite", flexShrink:0 }} />
@@ -335,13 +340,13 @@ export default function Hero() {
           }}
         />
         {/* Dark clouds — bottom terrain, left side */}
-        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/dark clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"darkCloudDrift 60s ease-in-out infinite", flexShrink:0 }} />
         </div>
         {/* Dark clouds — bottom terrain, right side */}
-        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/dark clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 2s infinite", flexShrink:0 }} />
@@ -447,7 +452,7 @@ export default function Hero() {
               .hero-logo-btn:nth-child(odd):hover  { transform:rotate(-8deg) scale(1.1); }
               .hero-logo-btn:nth-child(even):hover { transform:rotate(8deg)  scale(1.1); }
             `}</style>
-            <div style={{ display:"flex", alignItems:"center", gap:14, marginTop:20, flexWrap:"wrap" }}>
+            <div className="hero-logos" style={{ display:"flex", alignItems:"center", gap:14, marginTop:20, flexWrap:"wrap" }}>
               {[
                 { src:"/companies/blue-cross-blue-shield-association-circle.png", alt:"BCBSA",    scale:1.72, projectId:2 },
                 { src:"/companies/RoomBees-circle.png",                           alt:"RoomBees", scale:1,    projectId:1 },
