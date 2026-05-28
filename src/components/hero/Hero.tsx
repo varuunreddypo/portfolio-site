@@ -225,6 +225,7 @@ export default function Hero() {
           line-height: 1.45;
           margin: 0 0 10px;
           max-width: 480px;
+          min-height: calc(clamp(15px, 1.6vw, 19px) * 1.45 * 2);
           animation: textFadeIn 400ms ease-out backwards;
         }
         .hero-tagline {
@@ -234,6 +235,7 @@ export default function Hero() {
           line-height: 1.7;
           margin: 0 0 28px;
           max-width: 460px;
+          min-height: calc(clamp(13px, 1.3vw, 15px) * 1.7 * 2);
           animation: textFadeIn 400ms ease-out 80ms backwards;
         }
         .hero-cta {
@@ -298,16 +300,16 @@ export default function Hero() {
           }}
         />
         {/* White clouds — bottom terrain, left side */}
-        <div style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", transform:"translateY(-6%)" }}>
+        <div style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/white clouds.svg" alt=""
-            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftL 60s ease-in-out infinite" }} />
+            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftL 60s ease-in-out infinite", flexShrink:0 }} />
         </div>
         {/* White clouds — bottom terrain, right side */}
-        <div style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", transform:"translateY(-6%)" }}>
+        <div style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/white clouds.svg" alt=""
-            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 2s infinite" }} />
+            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 2s infinite", flexShrink:0 }} />
         </div>
       </div>
 
@@ -326,16 +328,16 @@ export default function Hero() {
           }}
         />
         {/* Dark clouds — bottom terrain, left side */}
-        <div style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", transform:"translateY(-6%)" }}>
+        <div style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/dark clouds.svg" alt=""
-            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"darkCloudDrift 60s ease-in-out infinite" }} />
+            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"darkCloudDrift 60s ease-in-out infinite", flexShrink:0 }} />
         </div>
         {/* Dark clouds — bottom terrain, right side */}
-        <div style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", transform:"translateY(-6%)" }}>
+        <div style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/dark clouds.svg" alt=""
-            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 2s infinite" }} />
+            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 2s infinite", flexShrink:0 }} />
         </div>
         {/* Stars beside badge — left of portrait */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
