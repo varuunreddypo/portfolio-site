@@ -220,13 +220,13 @@ export default function Hero() {
           margin: 0 0 24px;
         }
         .hero-headline {
-          font-family: var(--font-outfit);
-          font-weight: 700;
-          font-size: clamp(15px, 1.6vw, 19px);
-          line-height: 1.45;
+          font-family: "Press Start 2P", monospace;
+          font-weight: 400;
+          font-size: clamp(10px, 1.1vw, 13px);
+          line-height: 1.9;
           margin: 0 0 10px;
           max-width: 480px;
-          min-height: calc(clamp(15px, 1.6vw, 19px) * 1.45 * 2);
+          min-height: calc(clamp(10px, 1.1vw, 13px) * 1.9 * 2);
           animation: textFadeIn 400ms ease-out backwards;
         }
         .hero-tagline {
@@ -258,7 +258,7 @@ export default function Hero() {
         .hero-cta:active { transform: translateY(0); }
         @media (max-width:720px) {
           .hero-big-title { font-size: clamp(38px, 10vw, 56px); }
-          .hero-headline  { font-size: 14px; }
+          .hero-headline  { font-size: 9px; }
           .hero-tagline   { font-size: 13px; }
           .hero-desktop-br { display: none; }
           /* Drop blur filters on mobile — too expensive for mobile GPUs */
