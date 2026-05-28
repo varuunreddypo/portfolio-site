@@ -292,7 +292,7 @@ export default function Hero() {
       </div>
 
       {/* ── Designer mode SVG elements ── */}
-      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease", zIndex:3 }}>
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease", zIndex:3, overflow:"hidden" }}>
         {/* Small cloud — upper left */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -332,7 +332,7 @@ export default function Hero() {
       </div>
 
       {/* ── Pokéworld mode SVG elements ── */}
-      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease", zIndex:3 }}>
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease", zIndex:3, overflow:"hidden" }}>
         {/* Moon — upper right */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
