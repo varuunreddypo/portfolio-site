@@ -147,7 +147,7 @@ export default function VisitorGallery() {
           issueDate: r.issue_date,
           cardNo: r.card_no,
         }));
-        setCards([...SEED_CARDS, ...dbCards]);
+        setCards([...dbCards, ...SEED_CARDS]);
       })
       .catch(() => {
         try {
