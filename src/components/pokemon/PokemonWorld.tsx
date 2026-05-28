@@ -894,6 +894,8 @@ export default function PokemonWorld() {
                   issue_date: cardData.issueDate,
                   card_no: cardData.cardNo,
                 }),
+              }).then(() => {
+                window.dispatchEvent(new CustomEvent("trainer-card-saved"));
               }).catch(() => {/* ignore if DB unavailable */});
               sessionStorage.setItem("vr_intro_seen", "1");
               goTo("done");
