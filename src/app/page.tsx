@@ -11,9 +11,9 @@ export default function Home() {
     <PageTransition>
       <main>
         <Navbar />
-        <PokemonWorld />
         <Hero />
         <WorkSection />
+        <PokemonWorld />
         <VisitorGallery />
         <Footer />
       </main>
