@@ -13,9 +13,10 @@
   "dependencies": {
     "@remotion/cli": "^4.0.458",
     "@remotion/player": "^4.0.458",
+    "@supabase/supabase-js": "^2.106.2",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.16.0",
-    "next": "16.2.4",
+    "next": "^16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "remotion": "^4.0.458"
