@@ -59,6 +59,13 @@ section[id] {
   scroll-margin-top: 80px;
 }
 
+/* Hero full-height — svh sizes to the smallest viewport (browser UI visible),
+   preventing the "first scroll hides browser UI" double-scroll on mobile */
+#about {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
 body {
   background: var(--bg-primary);
   color: var(--text-primary);

@@ -499,7 +499,7 @@ export default function PokemonWorld() {
   if (phase === null || phase === "done") return <div style={{ height: 0 }} />;
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+    <div style={{ position: "relative", width: "100%", height: 0 }}>
       <style>{`
         @keyframes pfu          { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
         @keyframes pbspin       { 0%{transform:rotate(0)scale(1)} 25%{transform:rotate(90deg)scale(1.06)} 50%{transform:rotate(180deg)scale(1)} 75%{transform:rotate(270deg)scale(1.06)} 100%{transform:rotate(360deg)scale(1)} }
