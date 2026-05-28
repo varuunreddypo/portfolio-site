@@ -133,8 +133,7 @@ export default function VisitorGallery() {
   const [statsOpen, setStatsOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  useEffect(() => {
-    // Fetch from database, fall back to localStorage if unavailable
+  const fetchCards = () => {
     fetch("/api/cards")
       .then(r => r.ok ? r.json() : Promise.reject())
       .then((rows: { id: number; name: string; pokemon_id: number; pokemon_name: string; card_color: string; issue_date: string; card_no: number }[]) => {
@@ -151,7 +150,6 @@ export default function VisitorGallery() {
         setCards([...SEED_CARDS, ...dbCards]);
       })
       .catch(() => {
-        // Fall back to localStorage
         try {
           const raw = JSON.parse(localStorage.getItem("vr_trainer_cards") ?? "[]");
           const saved: SavedCard[] = raw.filter(
@@ -160,6 +158,13 @@ export default function VisitorGallery() {
           if (saved.length) setCards([...SEED_CARDS, ...saved]);
         } catch { /* ignore */ }
       });
+  };
+
+  useEffect(() => {
+    fetchCards();
+    window.addEventListener("trainer-card-saved", fetchCards);
+    return () => window.removeEventListener("trainer-card-saved", fetchCards);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const stats = computeStats(cards);
