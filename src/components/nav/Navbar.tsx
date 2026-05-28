@@ -9,7 +9,6 @@ import { InteriorRoleToggle } from "@/components/shared/InteriorRoleToggle";
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Work", href: "/#work" },
-  { label: "About", href: "/about" },
   { label: "Visitors", href: "/#visitors" },
   { label: "Playground", href: "/gym" },
 ];
