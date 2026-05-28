@@ -2,10 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { useHeroMode } from "@/hooks/useHeroMode";
+import { InteriorRoleToggle } from "@/components/shared/InteriorRoleToggle";
 
 const navLinks = [
-  { label: "About", href: "/#about" },
+  { label: "Home", href: "/" },
   { label: "Work", href: "/#work" },
+  { label: "About", href: "/about" },
   { label: "Visitors", href: "/#visitors" },
   { label: "Playground", href: "/gym" },
 ];
@@ -21,6 +25,17 @@ function scrollToHash(hash: string) {
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const { mode } = useHeroMode();
+  const isDesignerLight  = pathname === "/" && !scrolled && mode === "designer";
+  const isPokeworldDark  = pathname === "/" && !scrolled && mode === "pokeworld";
+
+  const linkColor      = isDesignerLight ? "rgba(10,24,48,0.55)"  : isPokeworldDark ? "#ffffff"               : "var(--text-secondary)";
+  const linkHoverColor = isDesignerLight ? "rgba(10,24,48,1)"     : isPokeworldDark ? "#ffffff"                : "var(--text-primary)";
+  const ctaColor       = isDesignerLight ? "#4f46e5"              : isPokeworldDark ? "#fbbf24"                : "var(--accent)";
+  const ctaBorder      = isDesignerLight ? "#4f46e5"              : isPokeworldDark ? "rgba(251,191,36,0.6)"   : "var(--border-accent)";
+  const ctaHoverBg     = isDesignerLight ? "rgba(79,70,229,0.08)" : isPokeworldDark ? "rgba(251,191,36,0.1)"  : "var(--accent-glow)";
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -68,9 +83,12 @@ export default function Navbar() {
             <img
               src="/logo.png"
               alt="VR"
-              style={{ height: "48px", width: "auto", display: "block", filter: "brightness(0.6)" }}
+              style={{ height: "48px", width: "auto", display: "block", filter: isPokeworldDark ? "brightness(1) invert(1)" : "brightness(0.6)" }}
             />
           </motion.a>
+
+          {/* Role toggle — only on case study / work pages */}
+          {pathname !== "/" && pathname !== "/about" && <InteriorRoleToggle />}
 
           {/* Desktop Links */}
           <ul
@@ -95,8 +113,8 @@ export default function Navbar() {
                     fontFamily: '"Press Start 2P",monospace',
                     fontSize: "8px",
                     letterSpacing: "1px",
-                    color: "var(--text-secondary)",
-                    transition: "color 150ms cubic-bezier(0.0,0.0,0.2,1)",
+                    color: linkColor,
+                    transition: "color 300ms cubic-bezier(0.0,0.0,0.2,1)",
                     textDecoration: "none",
                   }}
                   onClick={(e) => {
@@ -110,12 +128,8 @@ export default function Navbar() {
                       }
                     }
                   }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "var(--text-primary)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "var(--text-secondary)")
-                  }
+                  onMouseEnter={(e) => (e.currentTarget.style.color = linkHoverColor)}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = linkColor)}
                 >
                   {link.label.toUpperCase()}
                 </a>
@@ -139,16 +153,16 @@ export default function Navbar() {
               letterSpacing: "1px",
               padding: "10px 16px",
               borderRadius: "2px",
-              border: "1px solid var(--border-accent)",
-              color: "var(--accent)",
+              border: `1px solid ${ctaBorder}`,
+              color: ctaColor,
               background: "transparent",
               textDecoration: "none",
               display: "inline-block",
               willChange: "transform",
+              transition: "background 200ms ease, color 300ms ease, border-color 300ms ease",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background =
-                "var(--accent-glow)";
+              (e.currentTarget as HTMLElement).style.background = ctaHoverBg;
             }}
             onMouseLeave={(e) => {
               (e.currentTarget as HTMLElement).style.background = "transparent";

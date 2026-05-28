@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Press_Start_2P, VT323, Montserrat, Caveat, Space_Mono } from "next/font/google";
+import { Press_Start_2P, VT323, Montserrat, Caveat, Space_Mono, Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const pressStart2P = Press_Start_2P({
@@ -35,6 +35,19 @@ const spaceMono = Space_Mono({
   display: "swap",
 });
 
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  weight: ["300", "400", "500"],
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   icons: { icon: "/logo.png" },
   title: "Varuun Reddy — Product Designer",
@@ -56,7 +69,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${pressStart2P.variable} ${vt323.variable} ${montserrat.variable} ${caveat.variable} ${spaceMono.variable} h-full`}
+      className={`${pressStart2P.variable} ${vt323.variable} ${montserrat.variable} ${caveat.variable} ${spaceMono.variable} ${outfit.variable} ${jetbrainsMono.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>{children}</body>
     </html>

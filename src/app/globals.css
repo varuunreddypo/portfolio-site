@@ -73,6 +73,17 @@ body {
   font-family: var(--font-pixel);
 }
 
+.interior-role-toggle {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
 .font-mono-retro {
   font-family: var(--font-mono);
 }

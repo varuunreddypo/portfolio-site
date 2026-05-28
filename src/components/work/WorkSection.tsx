@@ -308,6 +308,7 @@ export default function WorkSection() {
             <Fragment key={project.id}>
               {i === 0 ? (
                 <motion.div
+                  id={`project-${project.id}`}
                   variants={fadeUpVariants}
                   initial="hidden"
                   whileInView="visible"
@@ -321,6 +322,7 @@ export default function WorkSection() {
                 </motion.div>
               ) : i === 1 ? (
                 <motion.div
+                  id={`project-${project.id}`}
                   variants={fadeUpVariants}
                   initial="hidden"
                   whileInView="visible"
@@ -334,6 +336,7 @@ export default function WorkSection() {
                 </motion.div>
               ) : i === 2 ? (
                 <motion.div
+                  id={`project-${project.id}`}
                   variants={fadeUpVariants}
                   initial="hidden"
                   whileInView="visible"
@@ -347,6 +350,7 @@ export default function WorkSection() {
                 </motion.div>
               ) : i === 4 ? (
                 <motion.div
+                  id={`project-${project.id}`}
                   variants={fadeUpVariants}
                   initial="hidden"
                   whileInView="visible"
@@ -360,6 +364,7 @@ export default function WorkSection() {
                 </motion.div>
               ) : (
                 <motion.div
+                  id={`project-${project.id}`}
                   variants={fadeUpVariants}
                   initial="hidden"
                   whileInView="visible"
