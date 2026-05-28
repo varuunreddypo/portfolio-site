@@ -53,7 +53,7 @@ export function PortraitBadge({
           position: absolute;
           inset: 0;
           z-index: 2;
-          animation: ringRotate 30s linear infinite;
+          animation: ringRotate 30s linear 2.5s infinite;
           transform-origin: 50% 65%;
           pointer-events: none;
         }

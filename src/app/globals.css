@@ -50,7 +50,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   overflow-x: clip;
 }
 
@@ -72,7 +71,7 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Pixel font utility */
@@ -210,6 +209,14 @@ body {
 .image-collage-wrap:hover img {
   filter: brightness(1.06) saturate(1.05);
   transition: filter 0.3s ease;
+}
+
+/* ── Hero: remove viewport-height floor on mobile so content determines height
+   (prevents iOS Safari double-scroll where hero overflows 100svh) ── */
+@media (max-width: 720px) {
+  #about {
+    min-height: 0 !important;
+  }
 }
 
 /* ── Mobile responsiveness ── */

@@ -55,6 +55,7 @@ function ColInlineToggle({ isOn, onClick }: { isOn: boolean; onClick: () => void
         verticalAlign: "middle",
         top: "-0.06em",
         margin: "0 0.05em",
+        touchAction: "manipulation",
         transition: "background 500ms ease, border-color 400ms ease, box-shadow 400ms ease",
       }}
     >
@@ -75,23 +76,23 @@ function ColInlineToggle({ isOn, onClick }: { isOn: boolean; onClick: () => void
 // ── Scattered star positions — all below navbar (~12% min), clear of badge ──
 const STAR_POSITIONS: { src: string; w: number; style: React.CSSProperties; delay: string; dur: string }[] = [
   // Above-badge zone — left side, safely below navbar
-  { src: "orange star.svg",  w: 10, style: { top: "12%", left: "10%"  }, delay: "0.2s", dur: "2.1s" },
-  { src: "yellow star.svg",  w: 18, style: { top: "16%", left: "20%"  }, delay: "1.1s", dur: "2.6s" },
-  { src: "purple star.svg",  w: 14, style: { top: "13%", left: "32%"  }, delay: "0.6s", dur: "1.8s" },
+  { src: "orange star.svg",  w: 10, style: { top: "12%", left: "10%"  }, delay: "2.7s", dur: "2.1s" },
+  { src: "yellow star.svg",  w: 18, style: { top: "16%", left: "20%"  }, delay: "3.6s", dur: "2.6s" },
+  { src: "purple star.svg",  w: 14, style: { top: "13%", left: "32%"  }, delay: "3.1s", dur: "1.8s" },
   // Top band — right side, below navbar
-  { src: "yellow star.svg",  w: 22, style: { top: "12%", left: "3%"   }, delay: "0s",   dur: "2.4s" },
-  { src: "orange star.svg",  w: 10, style: { top: "13%", left: "48%"  }, delay: "0.5s", dur: "1.9s" },
-  { src: "purple star.svg",  w: 18, style: { top: "12%", left: "62%"  }, delay: "1.2s", dur: "2.8s" },
-  { src: "yellow star.svg",  w: 20, style: { top: "14%", left: "78%"  }, delay: "0.3s", dur: "2.1s" },
-  { src: "purple star.svg",  w: 14, style: { top: "12%", right: "4%"  }, delay: "2.0s", dur: "2.2s" },
+  { src: "yellow star.svg",  w: 22, style: { top: "12%", left: "3%"   }, delay: "2.5s", dur: "2.4s" },
+  { src: "orange star.svg",  w: 10, style: { top: "13%", left: "48%"  }, delay: "3.0s", dur: "1.9s" },
+  { src: "purple star.svg",  w: 18, style: { top: "12%", left: "62%"  }, delay: "3.7s", dur: "2.8s" },
+  { src: "yellow star.svg",  w: 20, style: { top: "14%", left: "78%"  }, delay: "2.8s", dur: "2.1s" },
+  { src: "purple star.svg",  w: 14, style: { top: "12%", right: "4%"  }, delay: "4.5s", dur: "2.2s" },
   // Upper-mid — right side of badge zone
-  { src: "orange star.svg",  w: 10, style: { top: "26%", left: "44%"  }, delay: "0.7s", dur: "3.0s" },
-  { src: "yellow star.svg",  w: 20, style: { top: "24%", left: "66%"  }, delay: "1.3s", dur: "2.6s" },
-  { src: "purple star.svg",  w: 16, style: { top: "22%", right: "6%"  }, delay: "1.5s", dur: "2.7s" },
+  { src: "orange star.svg",  w: 10, style: { top: "26%", left: "44%"  }, delay: "3.2s", dur: "3.0s" },
+  { src: "yellow star.svg",  w: 20, style: { top: "24%", left: "66%"  }, delay: "3.8s", dur: "2.6s" },
+  { src: "purple star.svg",  w: 16, style: { top: "22%", right: "6%"  }, delay: "4.0s", dur: "2.7s" },
   // Mid band
-  { src: "yellow star.svg",  w: 18, style: { top: "36%", right: "4%"  }, delay: "0.8s", dur: "2.3s" },
-  { src: "purple star.svg",  w: 16, style: { top: "44%", left: "58%"  }, delay: "0.4s", dur: "2.0s" },
-  { src: "yellow star.svg",  w: 20, style: { top: "40%", right: "12%" }, delay: "1.7s", dur: "2.4s" },
+  { src: "yellow star.svg",  w: 18, style: { top: "36%", right: "4%"  }, delay: "3.3s", dur: "2.3s" },
+  { src: "purple star.svg",  w: 16, style: { top: "44%", left: "58%"  }, delay: "2.9s", dur: "2.0s" },
+  { src: "yellow star.svg",  w: 20, style: { top: "40%", right: "12%" }, delay: "4.2s", dur: "2.4s" },
 ];
 
 // ── Designer background ──
@@ -150,7 +151,7 @@ export default function Hero() {
   const marqueeItems = [...SKILLS, ...SKILLS];
 
   return (
-    <section id="about" style={{ display: "flex", flexDirection: "column", position: "relative", overflow: "clip" }}>
+    <section id="about" style={{ display: "flex", flexDirection: "column", position: "relative" }}>
       <style>{`
         @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         @keyframes fadeUp  { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -250,6 +251,7 @@ export default function Hero() {
           cursor: pointer;
           text-decoration: none;
           white-space: nowrap;
+          touch-action: manipulation;
           transition: opacity 120ms ease, transform 100ms ease, background 700ms ease, color 700ms ease, border-color 700ms ease;
         }
         .hero-cta:hover  { opacity: 0.8; transform: translateY(-1px); }
@@ -263,22 +265,34 @@ export default function Hero() {
           .hero-blob { filter: none !important; }
           /* Faster toggle transition on mobile */
           .hero-mode-layer { transition-duration: 350ms !important; }
+          /* Single full-width cloud on mobile — avoids center gap from two containers */
+          .hero-cloud-l { width: 110% !important; left: -5% !important; }
+          .hero-cloud-r { display: none !important; }
+          /* Responsive CTA buttons */
+          .hero-cta { font-size: 9px !important; padding: 10px 14px !important; gap: 5px !important; }
+          /* Responsive logos */
+          .hero-logos { gap: 10px !important; margin-top: 14px !important; }
+          .hero-logo-btn { width: 36px !important; height: 36px !important; }
+          /* Tighter layout so hero fits within 100svh — prevents double-scroll on iOS */
+          .hero-content-main { padding-top: 76px !important; padding-bottom: 16px !important; }
+          .hero-main-row { gap: 16px !important; }
+          .hero-tagline { margin-bottom: 16px !important; }
         }
         @media (prefers-reduced-motion: reduce) {
           .hero-headline, .hero-tagline { animation: none; }
         }
       `}</style>
 
-      {/* ── Gradient backgrounds (crossfade) ── */}
-      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease" }}>
+      {/* ── Gradient backgrounds (crossfade) — overflow:hidden clips blobs at section edge ── */}
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease", overflow:"hidden" }}>
         <DesignerBg />
       </div>
-      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease" }}>
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease", overflow:"hidden" }}>
         <PokeworldBg />
       </div>
 
       {/* ── Designer mode SVG elements ── */}
-      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease", zIndex:3 }}>
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease", zIndex:3, overflow:"hidden" }}>
         {/* Small cloud — upper left */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -288,7 +302,7 @@ export default function Hero() {
             position:"absolute", top:"12%", left:"-1%",
             width:"clamp(160px,16vw,250px)", height:"auto",
             imageRendering:"pixelated",
-            animation:"cloudBob 9s ease-in-out infinite",
+            animation:"cloudBob 9s ease-in-out 2.5s infinite",
           }}
         />
         {/* Group 2 cloud — upper right */}
@@ -300,25 +314,25 @@ export default function Hero() {
             position:"absolute", top:"10%", right:"-2%",
             width:"clamp(200px,22vw,340px)", height:"auto",
             imageRendering:"pixelated",
-            animation:"cloudDriftR 38s ease-in-out 4s infinite",
+            animation:"cloudDriftR 38s ease-in-out 6s infinite",
           }}
         />
         {/* White clouds — bottom terrain, left side */}
-        <div style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/white clouds.svg" alt=""
-            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftL 60s ease-in-out infinite", flexShrink:0 }} />
+            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftL 60s ease-in-out 2.5s infinite", flexShrink:0 }} />
         </div>
         {/* White clouds — bottom terrain, right side */}
-        <div style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/white clouds.svg" alt=""
-            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 2s infinite", flexShrink:0 }} />
+            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 4.5s infinite", flexShrink:0 }} />
         </div>
       </div>
 
       {/* ── Pokéworld mode SVG elements ── */}
-      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease", zIndex:3 }}>
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease", zIndex:3, overflow:"hidden" }}>
         {/* Moon — upper right */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -328,26 +342,26 @@ export default function Hero() {
             position:"absolute", top:"12%", right:"5%",
             width:"clamp(70px,9vw,120px)", height:"auto",
             imageRendering:"pixelated",
-            animation:"moonGlow 3.5s ease-in-out infinite, moonBob 8s ease-in-out infinite",
+            animation:"moonGlow 3.5s ease-in-out 2.5s infinite, moonBob 8s ease-in-out 2.5s infinite",
           }}
         />
         {/* Dark clouds — bottom terrain, left side */}
-        <div style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/dark clouds.svg" alt=""
-            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"darkCloudDrift 60s ease-in-out infinite", flexShrink:0 }} />
+            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"darkCloudDrift 60s ease-in-out 2.5s infinite", flexShrink:0 }} />
         </div>
         {/* Dark clouds — bottom terrain, right side */}
-        <div style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end" }}>
+        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/dark clouds.svg" alt=""
-            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 2s infinite", flexShrink:0 }} />
+            style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 4.5s infinite", flexShrink:0 }} />
         </div>
         {/* Stars beside badge — left of portrait */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/hero vectors/yellow star.svg" alt="" style={{ position:"absolute", top:"34%", left:"4%", width:28, height:"auto", imageRendering:"pixelated", animation:"starTwinkle1 2.4s ease-in-out 0.3s infinite" }} />
+        <img src="/hero vectors/yellow star.svg" alt="" style={{ position:"absolute", top:"34%", left:"4%", width:28, height:"auto", imageRendering:"pixelated", animation:"starTwinkle1 2.4s ease-in-out 2.8s infinite" }} />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/hero vectors/purple star.svg" alt="" style={{ position:"absolute", top:"50%", left:"2%", width:16, height:"auto", imageRendering:"pixelated", animation:"starTwinkle2 1.9s ease-in-out 1.1s infinite" }} />
+        <img src="/hero vectors/purple star.svg" alt="" style={{ position:"absolute", top:"50%", left:"2%", width:16, height:"auto", imageRendering:"pixelated", animation:"starTwinkle2 1.9s ease-in-out 3.6s infinite" }} />
 
         {/* Stars scattered */}
         {STAR_POSITIONS.map((s, i) => (
@@ -369,7 +383,7 @@ export default function Hero() {
       </div>
 
       {/* ── Main content ── */}
-      <main style={{ position:"relative", zIndex:10, flex:1, display:"flex", alignItems:"center", padding:"88px 32px 48px" }}>
+      <main className="hero-content-main" style={{ position:"relative", zIndex:10, flex:1, display:"flex", alignItems:"center", padding:"88px 32px 48px" }}>
         <div className="hero-main-row">
 
           {/* Portrait badge */}
@@ -380,7 +394,7 @@ export default function Hero() {
               overlayImageSrc="/new hero/varuun-trainer Background Removed.png"
               overlayImageAlt="Varuun as Pokémon Trainer"
               showOverlay={isPoke}
-              size="clamp(240px, 28vw, 380px)"
+              size="clamp(160px, 28vw, 380px)"
               ringTextColor={isPoke ? "rgba(251,191,36,0.9)" : "rgba(10,24,48,0.55)"}
               bgColor={isPoke ? "#0a0320" : "#c8dff0"}
             />
@@ -440,11 +454,11 @@ export default function Hero() {
 
             {/* Company logos */}
             <style>{`
-              .hero-logo-btn { background:none; border:none; padding:0; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; overflow:hidden; transition:transform 220ms cubic-bezier(0.34,1.56,0.64,1); }
+              .hero-logo-btn { background:none; border:none; padding:0; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; overflow:hidden; touch-action:manipulation; transition:transform 220ms cubic-bezier(0.34,1.56,0.64,1); }
               .hero-logo-btn:nth-child(odd):hover  { transform:rotate(-8deg) scale(1.1); }
               .hero-logo-btn:nth-child(even):hover { transform:rotate(8deg)  scale(1.1); }
             `}</style>
-            <div style={{ display:"flex", alignItems:"center", gap:14, marginTop:20, flexWrap:"wrap" }}>
+            <div className="hero-logos" style={{ display:"flex", alignItems:"center", gap:14, marginTop:20, flexWrap:"wrap" }}>
               {[
                 { src:"/companies/blue-cross-blue-shield-association-circle.png", alt:"BCBSA",    scale:1.72, projectId:2 },
                 { src:"/companies/RoomBees-circle.png",                           alt:"RoomBees", scale:1,    projectId:1 },
@@ -476,7 +490,7 @@ export default function Hero() {
         transition:"background 700ms ease",
         borderTop: isPoke ? "1px solid rgba(251,191,36,0.15)" : "1px solid rgba(255,255,255,0.1)",
       }}>
-        <div style={{ display:"flex", width:"max-content", animation:"marqueeScroll 28s linear infinite" }}>
+        <div style={{ display:"flex", width:"max-content", animation:"marqueeScroll 28s linear 1s infinite", willChange:"transform" }}>
           {marqueeItems.map((skill, i) => (
             <span key={i} style={{
               display:"inline-flex", alignItems:"center",
