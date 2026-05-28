@@ -212,6 +212,14 @@ body {
   transition: filter 0.3s ease;
 }
 
+/* ── Hero: remove viewport-height floor on mobile so content determines height
+   (prevents iOS Safari double-scroll where hero overflows 100svh) ── */
+@media (max-width: 720px) {
+  #about {
+    min-height: 0 !important;
+  }
+}
+
 /* ── Mobile responsiveness ── */
 @media (max-width: 768px) {
   /* Navbar: hide links, keep logo + resume */
