@@ -7,7 +7,7 @@ export async function GET() {
   const { data, error } = await supabase
     .from("trainer_cards")
     .select("*")
-    .order("created_at", { ascending: true });
+    .order("created_at", { ascending: false });
 
   if (error) return NextResponse.json([], { status: 200 });
   return NextResponse.json(data);
