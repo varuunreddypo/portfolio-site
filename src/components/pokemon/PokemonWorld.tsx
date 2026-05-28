@@ -872,15 +872,29 @@ export default function PokemonWorld() {
             {/* Enter button */}
             <button onClick={() => {
               if (!canEnter || !chosen) return;
+              const cardData = {
+                id: Date.now(), name: trainerName.trim().toUpperCase(),
+                pokemonId: chosen.id, pokemonName: chosen.name,
+                cardColor, issueDate, cardNo,
+              };
               try {
                 const existing = JSON.parse(localStorage.getItem("vr_trainer_cards") ?? "[]");
-                localStorage.setItem("vr_trainer_cards", JSON.stringify([...existing, {
-                  id: Date.now(), name: trainerName.trim().toUpperCase(),
-                  pokemonId: chosen.id, pokemonName: chosen.name,
-                  cardColor, issueDate, cardNo,
-                }]));
+                localStorage.setItem("vr_trainer_cards", JSON.stringify([...existing, cardData]));
                 localStorage.setItem("selected-starter", chosen.name.toLowerCase());
               } catch { /* ignore */ }
+              // Save to database (fire-and-forget)
+              fetch("/api/cards", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  name: cardData.name,
+                  pokemon_id: cardData.pokemonId,
+                  pokemon_name: cardData.pokemonName,
+                  card_color: cardData.cardColor,
+                  issue_date: cardData.issueDate,
+                  card_no: cardData.cardNo,
+                }),
+              }).catch(() => {/* ignore if DB unavailable */});
               sessionStorage.setItem("vr_intro_seen", "1");
               goTo("done");
               setTimeout(() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }), 400);

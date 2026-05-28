@@ -134,13 +134,32 @@ export default function VisitorGallery() {
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = JSON.parse(localStorage.getItem("vr_trainer_cards") ?? "[]");
-      const saved: SavedCard[] = raw.filter(
-        (c: unknown) => c && typeof c === "object" && "pokemonName" in (c as object) && "pokemonId" in (c as object)
-      );
-      if (saved.length) setCards([...SEED_CARDS, ...saved]);
-    } catch { /* ignore */ }
+    // Fetch from database, fall back to localStorage if unavailable
+    fetch("/api/cards")
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then((rows: { id: number; name: string; pokemon_id: number; pokemon_name: string; card_color: string; issue_date: string; card_no: number }[]) => {
+        if (!Array.isArray(rows) || rows.length === 0) return;
+        const dbCards: SavedCard[] = rows.map(r => ({
+          id: r.id,
+          name: r.name,
+          pokemonId: r.pokemon_id,
+          pokemonName: r.pokemon_name,
+          cardColor: r.card_color,
+          issueDate: r.issue_date,
+          cardNo: r.card_no,
+        }));
+        setCards([...SEED_CARDS, ...dbCards]);
+      })
+      .catch(() => {
+        // Fall back to localStorage
+        try {
+          const raw = JSON.parse(localStorage.getItem("vr_trainer_cards") ?? "[]");
+          const saved: SavedCard[] = raw.filter(
+            (c: unknown) => c && typeof c === "object" && "pokemonName" in (c as object) && "pokemonId" in (c as object)
+          );
+          if (saved.length) setCards([...SEED_CARDS, ...saved]);
+        } catch { /* ignore */ }
+      });
   }, []);
 
   const stats = computeStats(cards);

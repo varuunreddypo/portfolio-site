@@ -1,22 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { ExternalLink, Mail, Check } from "lucide-react";
 import { useHeroMode } from "@/hooks/useHeroMode";
 import { PortraitBadge } from "./PortraitBadge";
 
 const CONTACT_EMAIL = "varuunreddypo@gmail.com";
 
-const HERO_CONTENT = {
+const HERO_CONTENT: Record<"designer" | "pokeworld", { headline: ReactNode; tagline: ReactNode }> = {
   designer: {
-    headline: "Designing systems for healthcare, B2B SaaS, and beyond.",
-    tagline: "7 years. 5 industries. One obsession — making complex things feel simple.",
+    headline: <>Designing systems for healthcare, B2C,<br className="hero-desktop-br" /> B2B SaaS, and beyond.</>,
+    tagline: <>7 years. 5 industries. One obsession —<br className="hero-desktop-br" /> making complex things feel simple.</>,
   },
   pokeworld: {
     headline: "Every product is a Pokédex.",
     tagline: "My job is to help users level up — one interaction at a time.",
   },
-} as const;
+};
 
 const SKILLS = [
   "Healthcare UX", "Federal Programs", "PropTech", "Housing Tech",
@@ -256,6 +256,7 @@ export default function Hero() {
           .hero-big-title { font-size: clamp(38px, 10vw, 56px); }
           .hero-headline  { font-size: 14px; }
           .hero-tagline   { font-size: 13px; }
+          .hero-desktop-br { display: none; }
         }
         @media (prefers-reduced-motion: reduce) {
           .hero-headline, .hero-tagline { animation: none; }
