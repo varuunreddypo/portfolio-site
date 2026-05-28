@@ -9,7 +9,7 @@ const CONTACT_EMAIL = "varuunreddypo@gmail.com";
 
 const HERO_CONTENT: Record<"designer" | "pokeworld", { headline: ReactNode; tagline: ReactNode }> = {
   designer: {
-    headline: <>Designing systems for healthcare, B2C,<br className="hero-desktop-br" /> B2B SaaS, and beyond.</>,
+    headline: <>Designing systems for healthcare,<br className="hero-desktop-br" /> B2C, B2B SaaS, and beyond.</>,
     tagline: <>7 years. 5 industries. One obsession —<br className="hero-desktop-br" /> making complex things feel simple.</>,
   },
   pokeworld: {
