@@ -263,9 +263,9 @@ export default function Hero() {
           .hero-blob { filter: none !important; }
           /* Faster toggle transition on mobile */
           .hero-mode-layer { transition-duration: 350ms !important; }
-          /* Wider clouds on mobile so the SVG scales taller */
-          .hero-cloud-l { width: 180% !important; left: -15% !important; }
-          .hero-cloud-r { width: 180% !important; right: -15% !important; }
+          /* Single full-width cloud on mobile — avoids center gap from two containers */
+          .hero-cloud-l { width: 110% !important; left: -5% !important; }
+          .hero-cloud-r { display: none !important; }
           /* Responsive CTA buttons */
           .hero-cta { font-size: 9px !important; padding: 10px 14px !important; gap: 5px !important; }
           /* Responsive logos */
