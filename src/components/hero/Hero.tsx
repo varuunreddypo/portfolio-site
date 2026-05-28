@@ -55,6 +55,7 @@ function ColInlineToggle({ isOn, onClick }: { isOn: boolean; onClick: () => void
         verticalAlign: "middle",
         top: "-0.06em",
         margin: "0 0.05em",
+        touchAction: "manipulation",
         transition: "background 500ms ease, border-color 400ms ease, box-shadow 400ms ease",
       }}
     >
@@ -250,6 +251,7 @@ export default function Hero() {
           cursor: pointer;
           text-decoration: none;
           white-space: nowrap;
+          touch-action: manipulation;
           transition: opacity 120ms ease, transform 100ms ease, background 700ms ease, color 700ms ease, border-color 700ms ease;
         }
         .hero-cta:hover  { opacity: 0.8; transform: translateY(-1px); }
@@ -452,7 +454,7 @@ export default function Hero() {
 
             {/* Company logos */}
             <style>{`
-              .hero-logo-btn { background:none; border:none; padding:0; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; overflow:hidden; transition:transform 220ms cubic-bezier(0.34,1.56,0.64,1); }
+              .hero-logo-btn { background:none; border:none; padding:0; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; overflow:hidden; touch-action:manipulation; transition:transform 220ms cubic-bezier(0.34,1.56,0.64,1); }
               .hero-logo-btn:nth-child(odd):hover  { transform:rotate(-8deg) scale(1.1); }
               .hero-logo-btn:nth-child(even):hover { transform:rotate(8deg)  scale(1.1); }
             `}</style>

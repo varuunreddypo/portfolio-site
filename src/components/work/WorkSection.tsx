@@ -158,7 +158,7 @@ function ProjectEntry({ project }: { project: Project }) {
               whileHover={{ scale: 1.25, y: -1, color: "#ffffff" }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
-              style={{ color: "var(--accent)", flexShrink: 0, display: "flex" }}
+              style={{ color: "var(--accent)", flexShrink: 0, display: "flex", touchAction: "manipulation" }}
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M2 12L12 2M12 2H6M12 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -183,6 +183,7 @@ function ProjectEntry({ project }: { project: Project }) {
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 380, damping: 24 }}
+              style={{ touchAction: "manipulation" }}
             >
               <Link
                 href={project.caseStudyHref}
@@ -227,7 +228,7 @@ function ProjectEntry({ project }: { project: Project }) {
               style={{
                 display: "inline-grid", gridAutoFlow: "column", alignItems: "center", gap: "8px",
                 fontFamily: '"Press Start 2P",monospace', fontSize: "8px", lineHeight: "1",
-                color: "#fb923c", textDecoration: "none", letterSpacing: "1px",
+                color: "#fb923c", textDecoration: "none", letterSpacing: "1px", touchAction: "manipulation",
                 padding: "10px 18px", border: "1px solid rgba(251,146,60,0.3)", borderRadius: "2px",
                 transition: "background 150ms cubic-bezier(0.0,0.0,0.2,1), border-color 150ms cubic-bezier(0.0,0.0,0.2,1)",
               }}

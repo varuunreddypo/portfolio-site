@@ -76,7 +76,7 @@ export default function Navbar() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 400, damping: 22 }}
-            style={{ display: "flex", alignItems: "center" }}
+            style={{ display: "flex", alignItems: "center", touchAction: "manipulation" }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -156,6 +156,7 @@ export default function Navbar() {
               color: ctaColor,
               background: "transparent",
               textDecoration: "none",
+              touchAction: "manipulation",
               display: "inline-block",
               willChange: "transform",
               transition: "background 200ms ease, color 300ms ease, border-color 300ms ease",
