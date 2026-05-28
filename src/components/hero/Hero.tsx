@@ -101,10 +101,10 @@ function DesignerBg() {
       <div style={{ position: "absolute", inset: 0, background: "#e8f4fb" }} />
       {/* GPU-promoted layer for all blur blobs */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", transform: "translateZ(0)" }}>
-        <div style={{ position: "absolute", top: "-15%", left: "-10%", width: "60%", height: "70%", background: "radial-gradient(ellipse at center, rgba(99,179,237,0.38) 0%, transparent 70%)", filter: "blur(52px)" }} />
-        <div style={{ position: "absolute", top: "-10%", right: "-8%", width: "50%", height: "60%", background: "radial-gradient(ellipse at center, rgba(251,191,36,0.22) 0%, transparent 65%)", filter: "blur(60px)" }} />
-        <div style={{ position: "absolute", top: "20%", left: "28%", width: "55%", height: "55%", background: "radial-gradient(ellipse at center, rgba(249,168,212,0.18) 0%, transparent 65%)", filter: "blur(64px)" }} />
-        <div style={{ position: "absolute", bottom: "-10%", left: "-5%", width: "48%", height: "55%", background: "radial-gradient(ellipse at center, rgba(110,231,183,0.22) 0%, transparent 65%)", filter: "blur(52px)" }} />
+        <div className="hero-blob" style={{ position: "absolute", top: "-15%", left: "-10%", width: "60%", height: "70%", background: "radial-gradient(ellipse at center, rgba(99,179,237,0.38) 0%, transparent 70%)", filter: "blur(52px)" }} />
+        <div className="hero-blob" style={{ position: "absolute", top: "-10%", right: "-8%", width: "50%", height: "60%", background: "radial-gradient(ellipse at center, rgba(251,191,36,0.22) 0%, transparent 65%)", filter: "blur(60px)" }} />
+        <div className="hero-blob" style={{ position: "absolute", top: "20%", left: "28%", width: "55%", height: "55%", background: "radial-gradient(ellipse at center, rgba(249,168,212,0.18) 0%, transparent 65%)", filter: "blur(64px)" }} />
+        <div className="hero-blob" style={{ position: "absolute", bottom: "-10%", left: "-5%", width: "48%", height: "55%", background: "radial-gradient(ellipse at center, rgba(110,231,183,0.22) 0%, transparent 65%)", filter: "blur(52px)" }} />
       </div>
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(10,24,48,0.07) 1px, transparent 1px)", backgroundSize: "28px 28px", opacity: 0.5 }} />
     </>
@@ -118,10 +118,10 @@ function PokeworldBg() {
       <div style={{ position: "absolute", inset: 0, background: "#060d1e" }} />
       {/* GPU-promoted layer for all blur blobs */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", transform: "translateZ(0)" }}>
-        <div style={{ position: "absolute", top: "-15%", left: "-10%", width: "60%", height: "70%", background: "radial-gradient(ellipse at center, rgba(60,100,220,0.36) 0%, transparent 70%)", filter: "blur(52px)" }} />
-        <div style={{ position: "absolute", top: "-10%", right: "-8%", width: "50%", height: "60%", background: "radial-gradient(ellipse at center, rgba(140,60,240,0.26) 0%, transparent 65%)", filter: "blur(60px)" }} />
-        <div style={{ position: "absolute", top: "20%", left: "28%", width: "55%", height: "55%", background: "radial-gradient(ellipse at center, rgba(200,50,150,0.18) 0%, transparent 65%)", filter: "blur(64px)" }} />
-        <div style={{ position: "absolute", bottom: "-10%", left: "-5%", width: "48%", height: "55%", background: "radial-gradient(ellipse at center, rgba(30,180,150,0.18) 0%, transparent 65%)", filter: "blur(52px)" }} />
+        <div className="hero-blob" style={{ position: "absolute", top: "-15%", left: "-10%", width: "60%", height: "70%", background: "radial-gradient(ellipse at center, rgba(60,100,220,0.36) 0%, transparent 70%)", filter: "blur(52px)" }} />
+        <div className="hero-blob" style={{ position: "absolute", top: "-10%", right: "-8%", width: "50%", height: "60%", background: "radial-gradient(ellipse at center, rgba(140,60,240,0.26) 0%, transparent 65%)", filter: "blur(60px)" }} />
+        <div className="hero-blob" style={{ position: "absolute", top: "20%", left: "28%", width: "55%", height: "55%", background: "radial-gradient(ellipse at center, rgba(200,50,150,0.18) 0%, transparent 65%)", filter: "blur(64px)" }} />
+        <div className="hero-blob" style={{ position: "absolute", bottom: "-10%", left: "-5%", width: "48%", height: "55%", background: "radial-gradient(ellipse at center, rgba(30,180,150,0.18) 0%, transparent 65%)", filter: "blur(52px)" }} />
       </div>
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "28px 28px", opacity: 0.55 }} />
     </>
@@ -150,7 +150,7 @@ export default function Hero() {
   const marqueeItems = [...SKILLS, ...SKILLS];
 
   return (
-    <section id="about" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden" }}>
+    <section id="about" style={{ display: "flex", flexDirection: "column", position: "relative", overflow: "clip" }}>
       <style>{`
         @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         @keyframes fadeUp  { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -259,6 +259,10 @@ export default function Hero() {
           .hero-headline  { font-size: 14px; }
           .hero-tagline   { font-size: 13px; }
           .hero-desktop-br { display: none; }
+          /* Drop blur filters on mobile — too expensive for mobile GPUs */
+          .hero-blob { filter: none !important; }
+          /* Faster toggle transition on mobile */
+          .hero-mode-layer { transition-duration: 350ms !important; }
         }
         @media (prefers-reduced-motion: reduce) {
           .hero-headline, .hero-tagline { animation: none; }
@@ -266,15 +270,15 @@ export default function Hero() {
       `}</style>
 
       {/* ── Gradient backgrounds (crossfade) ── */}
-      <div style={{ position:"absolute", inset:0, opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease" }}>
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease" }}>
         <DesignerBg />
       </div>
-      <div style={{ position:"absolute", inset:0, opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease" }}>
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease" }}>
         <PokeworldBg />
       </div>
 
       {/* ── Designer mode SVG elements ── */}
-      <div style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease", zIndex:3 }}>
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease", zIndex:3 }}>
         {/* Small cloud — upper left */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -314,7 +318,7 @@ export default function Hero() {
       </div>
 
       {/* ── Pokéworld mode SVG elements ── */}
-      <div style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease", zIndex:3 }}>
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, pointerEvents:"none", opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease", zIndex:3 }}>
         {/* Moon — upper right */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
