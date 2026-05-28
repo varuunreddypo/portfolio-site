@@ -151,7 +151,7 @@ export default function Hero() {
   const marqueeItems = [...SKILLS, ...SKILLS];
 
   return (
-    <section id="about" style={{ display: "flex", flexDirection: "column", position: "relative", overflow: "clip" }}>
+    <section id="about" style={{ display: "flex", flexDirection: "column", position: "relative" }}>
       <style>{`
         @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         @keyframes fadeUp  { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -283,11 +283,11 @@ export default function Hero() {
         }
       `}</style>
 
-      {/* ── Gradient backgrounds (crossfade) ── */}
-      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease" }}>
+      {/* ── Gradient backgrounds (crossfade) — overflow:hidden clips blobs at section edge ── */}
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, opacity: isPoke ? 0 : 1, transition:"opacity 700ms ease", overflow:"hidden" }}>
         <DesignerBg />
       </div>
-      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease" }}>
+      <div className="hero-mode-layer" style={{ position:"absolute", inset:0, opacity: isPoke ? 1 : 0, transition:"opacity 700ms ease", overflow:"hidden" }}>
         <PokeworldBg />
       </div>
 
