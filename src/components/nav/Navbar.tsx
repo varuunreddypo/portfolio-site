@@ -87,7 +87,7 @@ export default function Navbar() {
           </motion.a>
 
           {/* Role toggle — only on case study / work pages */}
-          {pathname !== "/" && pathname !== "/about" && <InteriorRoleToggle />}
+          {pathname !== "/" && pathname !== "/about" && pathname !== "/gym" && <InteriorRoleToggle />}
 
           {/* Desktop Links */}
           <ul
