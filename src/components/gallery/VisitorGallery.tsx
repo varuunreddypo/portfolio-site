@@ -105,7 +105,7 @@ function MiniCard({ card }: { card: SavedCard }) {
             VARUUN&apos;S<br />POKè WORLD
           </div>
           <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "4px", color: "rgba(255,255,255,0.45)", marginBottom: "3px" }}>TRAINER</div>
-          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "#fff", textShadow: "1px 1px 0 rgba(0,0,0,0.6)", maxWidth: "95px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          <div style={{ fontFamily: '"Press Start 2P",monospace', fontSize: "7px", color: "#fff", textShadow: "1px 1px 0 rgba(0,0,0,0.6)", maxWidth: "95px", lineHeight: 1.6, overflowWrap: "break-word", wordBreak: "break-word" }}>
             {card.name}
           </div>
         </div>
