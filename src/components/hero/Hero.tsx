@@ -442,14 +442,31 @@ export default function Hero() {
                 <ExternalLink size={16} strokeWidth={2} />
                 LINKEDIN
               </a>
-              <button
-                onClick={() => { navigator.clipboard.writeText(CONTACT_EMAIL).then(() => { setCopied(true); setTimeout(() => setCopied(false), 3000); }); }}
-                className="hero-cta"
-                style={{ background: ctaPrimBg, color: ctaPrimFg, border:"none" }}
-              >
-                {copied ? <Check size={16} strokeWidth={2} /> : <Mail size={16} strokeWidth={2} />}
-                {copied ? "COPIED!" : "CONTACT"}
-              </button>
+              <div style={{ position:"relative" }}>
+                <button
+                  onClick={() => { navigator.clipboard.writeText(CONTACT_EMAIL).then(() => { setCopied(true); setTimeout(() => setCopied(false), 3000); }); }}
+                  className="hero-cta"
+                  style={{ background: ctaPrimBg, color: ctaPrimFg, border:"none" }}
+                >
+                  {copied ? <Check size={16} strokeWidth={2} /> : <Mail size={16} strokeWidth={2} />}
+                  {copied ? "COPIED!" : "CONTACT"}
+                </button>
+                <span style={{
+                  position: "absolute",
+                  top: "calc(100% + 6px)",
+                  left: 0,
+                  fontFamily: '"Press Start 2P", monospace',
+                  fontSize: "7px",
+                  color: isPoke ? "#fbbf24" : "rgba(10,24,48,0.6)",
+                  opacity: copied ? 1 : 0,
+                  transform: copied ? "translateY(0)" : "translateY(-4px)",
+                  transition: "opacity 200ms ease, transform 200ms ease",
+                  pointerEvents: "none",
+                  whiteSpace: "nowrap",
+                }}>
+                  {CONTACT_EMAIL}
+                </span>
+              </div>
             </div>
 
             {/* Company logos */}
