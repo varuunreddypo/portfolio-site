@@ -11,7 +11,7 @@
     "render": "remotion render remotion/index.ts PokedexBoot out/pokedex-boot.mp4"
   },
   "dependencies": {
-    "@remotion/cli": "^4.0.458",
+    "@remotion/cli": "^4.0.477",
     "@remotion/player": "^4.0.458",
     "@supabase/supabase-js": "^2.106.2",
     "framer-motion": "^12.38.0",
