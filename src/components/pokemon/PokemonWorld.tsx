@@ -802,7 +802,10 @@ export default function PokemonWorld() {
                       const ctx = getAudioCtx();
                       // Resume if the browser auto-suspended the context
                       const play = () => {
-                        fetch(`https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${p.id}.ogg`)
+                        const cryUrl = p.id === 25
+                          ? "/sounds/pikachu-custom.wav"
+                          : `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${p.id}.ogg`;
+                        fetch(cryUrl)
                           .then(r => r.arrayBuffer())
                           .then(buf => ctx.decodeAudioData(buf))
                           .then(decoded => {
