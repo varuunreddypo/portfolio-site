@@ -302,12 +302,6 @@ export default function BattleModal({
   const resolvedMovesRef = useRef(resolvedMoves);
   resolvedMovesRef.current = resolvedMoves;
 
-  // ── Hover info panel ──────────────────────────────────────────────────────
-  const [hoveredConcept, setHoveredConcept] = useState<ConceptId | null>(null);
-  const hoveredEntry = hoveredConcept
-    ? resolvedMoves.find(m => m.conceptId === hoveredConcept) ?? null
-    : null;
-
   const bg = BIOME_BG[biome] ?? BIOME_BG.none;
   const starterBackSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${starter.dexId}.png`;
 
@@ -553,42 +547,10 @@ export default function BattleModal({
         {/* ── Move buttons ── */}
         {!done && (
           <div style={{ background:'#0f172a', padding:'12px 16px', borderTop:'1px solid #1e293b' }}>
-            {/* Fixed-height info strip — always rendered, opacity only changes, no layout shift */}
-            <div style={{
-              height:62,
-              padding:'6px 10px',
-              marginBottom:8,
-              background:'rgba(255,255,255,0.03)',
-              border:'1px solid rgba(255,255,255,0.07)',
-              borderRadius:8,
-              transition:'opacity 0.15s',
-              opacity: hoveredEntry ? 1 : 0,
-              pointerEvents:'none',
-              overflow:'hidden',
-            }}>
-              <div style={{
-                fontFamily:'monospace', fontSize:10, color:'#cbd5e1',
-                fontStyle:'italic', lineHeight:1.4,
-                whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
-              }}>
-                &ldquo;{hoveredEntry?.sm.flavor ?? ''}&rdquo;
-              </div>
-              <div style={{
-                fontFamily:'monospace', fontSize:9, color:'#64748b', lineHeight:1.4, marginTop:3,
-                whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
-              }}>
-                {hoveredEntry ? `📚 ${hoveredEntry.meta.education}` : ''}
-              </div>
-            </div>
-
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
-              {resolvedMoves.map(({ conceptId, sm, meta, icon, gameMove }, moveIdx) => {
+              {resolvedMoves.map(({ conceptId, sm, icon, gameMove }, moveIdx) => {
                 const t        = THEME[conceptId];
                 const disabled = movePhase !== 'idle' || enemyPhase !== 'idle';
-                const isCC  = conceptId === 'color_contrast';
-                const isAlt = conceptId === 'alt_text';
-                const isKbd = conceptId === 'keyboard_nav';
-                const isHtm = conceptId === 'semantic_html';
 
                 return (
                   <button
@@ -596,82 +558,36 @@ export default function BattleModal({
                     onClick={() => handleMoveClick(gameMove, sm.name)}
                     onMouseEnter={e => {
                       if (disabled) return;
-                      setHoveredConcept(conceptId);
                       const el = e.currentTarget;
                       el.style.background = t.hoverBg;
                       el.style.transform = 'translateY(-2px)';
                       el.style.boxShadow = '0 6px 20px rgba(0,0,0,0.45)';
                     }}
                     onMouseLeave={e => {
-                      setHoveredConcept(null);
                       const el = e.currentTarget;
                       el.style.background = t.bg;
                       el.style.transform = '';
                       el.style.boxShadow = '';
                     }}
-                    onFocus={() => setHoveredConcept(conceptId)}
-                    onBlur={() => setHoveredConcept(null)}
                     disabled={disabled}
-                    aria-label={`${sm.name}. ${t.typeLabel} type. Power ${sm.power}. Teaches: ${meta.label}. ${sm.flavor}`}
+                    aria-label={sm.name}
                     style={{
-                      /* Fixed dimensions — nothing changes on hover */
-                      height: 84,
+                      height: 72,
                       boxSizing: 'border-box',
                       padding: '10px 12px',
-                      /* Concept identity borders — width never changes */
                       background: t.bg,
                       border: `2px ${t.borderStyle} ${t.border}`,
                       borderRadius: t.radius,
                       color: t.color,
-                      /* Layout */
                       fontFamily: 'monospace', fontSize: 11,
                       cursor: disabled ? 'not-allowed' : 'pointer',
                       textAlign: 'left', lineHeight: 1.5,
                       position: 'relative', overflow: 'hidden',
-                      /* Only non-layout props animate */
                       opacity: disabled ? 0.55 : 1,
                       transition: 'transform 0.14s ease, box-shadow 0.14s ease, opacity 0.18s',
                     }}
                   >
-                    {/* Color Contrast: rainbow top bar */}
-                    {isCC && (
-                      <div style={{
-                        position:'absolute', top:0, left:0, right:0, height:3,
-                        background:'linear-gradient(90deg,#ff0000,#ff8800,#ffff00,#00ff00,#0088ff,#8800ff,#ff0000)',
-                        backgroundSize:'200% 100%',
-                        animation:'rainbowBar 1.8s linear infinite',
-                      }} />
-                    )}
-                    {/* Alt Text: watermark */}
-                    {isAlt && (
-                      <div style={{
-                        position:'absolute', inset:0, display:'flex',
-                        alignItems:'center', justifyContent:'center',
-                        pointerEvents:'none', opacity:0.13,
-                        fontFamily:'monospace', fontSize:20, color:'#93c5fd', whiteSpace:'nowrap',
-                      }}>alt=&quot;&quot;</div>
-                    )}
-                    {/* Keyboard: arrow key decorations */}
-                    {isKbd && (
-                      <div style={{ position:'absolute', bottom:6, right:6, display:'flex', gap:3, pointerEvents:'none' }}>
-                        {['↑','↓','←','→'].map(k => (
-                          <span key={k} style={{
-                            fontSize:7, background:'#3a3a3a', borderRadius:3,
-                            padding:'1px 3px', border:'1px solid #555',
-                            color:'#ccc', boxShadow:'0 2px 0 #111',
-                          }}>{k}</span>
-                        ))}
-                      </div>
-                    )}
-                    {/* Semantic HTML: tag decoration */}
-                    {isHtm && (
-                      <div style={{
-                        position:'absolute', bottom:6, right:8, opacity:0.3,
-                        fontFamily:'monospace', fontSize:8, color:'#6ee7b7', pointerEvents:'none',
-                      }}>&lt;/h1&gt;</div>
-                    )}
-
-                    {/* Keyboard shortcut badge — top-left */}
+                    {/* Keyboard shortcut badge */}
                     <div style={{
                       position:'absolute', top:8, left:8,
                       fontFamily:'"Press Start 2P",monospace', fontSize:7,
@@ -684,39 +600,9 @@ export default function BattleModal({
                       {moveIdx + 1}
                     </div>
 
-                    {/* Power chip — top-right, absolute so it never affects flow */}
-                    <div style={{
-                      position:'absolute', top:8, right:8,
-                      fontFamily:'"Press Start 2P",monospace', fontSize:6,
-                      color:'rgba(255,255,255,0.55)',
-                      background:'rgba(255,255,255,0.07)',
-                      border:'1px solid rgba(255,255,255,0.12)',
-                      borderRadius:4, padding:'2px 5px',
-                      letterSpacing:0.5,
-                    }}>
-                      PWR {sm.power}{sm.hitCount ? `×${sm.hitCount}` : ''}
-                    </div>
-
                     {/* Move name */}
-                    <div style={{ fontWeight:700, fontSize:12, marginBottom:4, paddingRight:52 }}>
+                    <div style={{ fontWeight:700, fontSize:12, paddingLeft:28 }}>
                       {icon} {sm.name}
-                    </div>
-
-                    {/* Type badge */}
-                    <span style={{
-                      fontSize:7, padding:'1px 5px', borderRadius:3,
-                      background:'rgba(255,255,255,0.1)', color:t.color,
-                      border:`1px solid ${t.border}`,
-                      fontFamily:'monospace', letterSpacing:1,
-                    }}>{t.typeLabel}</span>
-
-                    {/* Concept label — absolute so it never grows the card */}
-                    <div style={{
-                      position:'absolute', bottom:6, left:12,
-                      fontFamily:'monospace', fontSize:8,
-                      color:'rgba(255,255,255,0.38)', letterSpacing:0.3,
-                    }}>
-                      Teaches: {meta.label}
                     </div>
                   </button>
                 );
