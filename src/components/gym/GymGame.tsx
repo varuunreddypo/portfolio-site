@@ -684,6 +684,29 @@ export default function GymGame() {
               >
                 <CharacterCanvas dir={state.dir} step={state.steps} isMoving={isMoving} size={charSize} />
               </div>
+
+              {/* How to Play button — top-right corner of map */}
+              <button
+                onClick={() => setShowHelp(true)}
+                aria-label="How to Play"
+                style={{
+                  position: 'absolute', top: 10, right: 10, zIndex: 20,
+                  width: 28, height: 28,
+                  background: 'rgba(0,0,0,0.6)',
+                  border: '1.5px solid rgba(255,215,0,0.55)',
+                  borderRadius: '50%',
+                  color: '#fbbf24',
+                  fontFamily: '"Press Start 2P",monospace', fontSize: 11,
+                  cursor: 'pointer', lineHeight: 1,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  backdropFilter: 'blur(4px)',
+                  transition: 'background 0.15s, border-color 0.15s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(245,196,0,0.22)'; e.currentTarget.style.borderColor = '#f5c400'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.6)'; e.currentTarget.style.borderColor = 'rgba(255,215,0,0.55)'; }}
+              >
+                ?
+              </button>
             </div>
           </div>
 
