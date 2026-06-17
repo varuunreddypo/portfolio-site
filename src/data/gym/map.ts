@@ -2,7 +2,7 @@ export type TileType = 'T' | 'G' | 'W' | 'P' | 'B';
 
 export const MAP_COLS = 32;
 export const MAP_ROWS = 24;
-export const PLAYER_START = { row: 23, col: 25 };
+export const PLAYER_START = { row: 13, col: 13 };
 
 // Water tiles — used for biome/encounter detection only
 const waterTiles = new Set([

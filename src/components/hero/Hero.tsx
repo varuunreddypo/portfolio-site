@@ -318,13 +318,13 @@ export default function Hero() {
           }}
         />
         {/* White clouds — bottom terrain, left side */}
-        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
+        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,220px)", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/white clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftL 60s ease-in-out 2.5s infinite", flexShrink:0 }} />
         </div>
         {/* White clouds — bottom terrain, right side */}
-        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
+        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,220px)", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/white clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 4.5s infinite", flexShrink:0 }} />
@@ -346,13 +346,13 @@ export default function Hero() {
           }}
         />
         {/* Dark clouds — bottom terrain, left side */}
-        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
+        <div className="hero-cloud-l" style={{ position:"absolute", bottom:0, left:"-5%", width:"90%", height:"clamp(80px,12vw,220px)", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/dark clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"darkCloudDrift 60s ease-in-out 2.5s infinite", flexShrink:0 }} />
         </div>
         {/* Dark clouds — bottom terrain, right side */}
-        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,150px)", overflow:"hidden", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
+        <div className="hero-cloud-r" style={{ position:"absolute", bottom:0, right:"-5%", width:"90%", height:"clamp(80px,12vw,220px)", display:"flex", alignItems:"flex-end", transform:"translateY(18%)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero vectors/dark clouds.svg" alt=""
             style={{ display:"block", width:"100%", height:"auto", imageRendering:"pixelated", animation:"cloudDriftR 60s ease-in-out 4.5s infinite", flexShrink:0 }} />
