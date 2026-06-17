@@ -540,7 +540,7 @@ export default function GymGame() {
         <div className="gym-map-col" style={{ display: 'flex', flexDirection: 'column', gap: 16, minHeight: 0, overflow: 'hidden' }}>
 
           {/* Map */}
-          <div style={{ flexShrink: 0, overflow: 'auto' }}>
+          <div style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
             <div
               ref={gameRef}
               role="application"
@@ -689,14 +689,14 @@ export default function GymGame() {
 
           {/* Controls panel */}
           <div style={{
-            flex: 1,
+            flexShrink: 0,
+            minHeight: 150,
             display: 'flex',
             flexDirection: 'column',
             borderRadius: 8,
             overflow: 'hidden',
             border: '1px solid rgba(255,215,0,0.3)',
             background: 'linear-gradient(180deg,#1a2035 0%,#111827 100%)',
-            minHeight: 0,
           }}>
 
             {/* Row 1 — DPad + Status/Encounter + Actions */}
@@ -811,6 +811,7 @@ export default function GymGame() {
               🏟️ How to Play
             </h2>
             <ul style={{ margin: 0, paddingLeft: 16, fontFamily: 'monospace', fontSize: 11, color: '#94a3b8', lineHeight: 2 }}>
+              <li>Use <strong style={{ color: '#f1f5f9' }}>Arrow Keys</strong> or the <strong style={{ color: '#f1f5f9' }}>D-Pad</strong> to navigate the map</li>
               <li>Walk on <strong style={{ color: '#86efac' }}>grass</strong>, <strong style={{ color: '#6ee7b7' }}>forest</strong>, or <strong style={{ color: '#7dd3fc' }}>water</strong> to find Pokémon</li>
               <li>Press <strong style={{ color: '#f1f5f9' }}>Enter</strong> to battle · <strong style={{ color: '#f1f5f9' }}>ESC</strong> to flee</li>
               <li>Use <strong style={{ color: '#f1f5f9' }}>1–4 keys</strong> or click to choose an attack</li>
