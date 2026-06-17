@@ -464,10 +464,10 @@ export default function GymGame() {
 
           {/* Pokédex 3×3 grid */}
           <div style={{ ...PANEL, flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <p style={{ margin: '0 0 8px', fontFamily: 'monospace', fontSize: 10, color: '#475569', textTransform: 'uppercase', letterSpacing: 1, flexShrink: 0 }}>
+            <p style={{ margin: '0 0 6px', fontFamily: 'monospace', fontSize: 10, color: '#475569', textTransform: 'uppercase', letterSpacing: 1, flexShrink: 0 }}>
               Pokédex {state.seen.length > 0 && `· ${state.seen.length}/9`}
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
+            <div style={{ flex: 1, minHeight: 0, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(3, 1fr)', gap: 4 }}>
               {ALL_POKEMON.map(pkmn => {
                 const discovered = state.seen.includes(pkmn.name);
                 const backSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pkmn.id}.png`;
@@ -484,6 +484,8 @@ export default function GymGame() {
                       flexDirection: 'column',
                       alignItems: 'center',
                       gap: 2,
+                      minHeight: 0,
+                      overflow: 'hidden',
                     }}
                   >
                     <img
@@ -491,13 +493,17 @@ export default function GymGame() {
                       alt={discovered ? pkmn.name : '???'}
                       draggable={false}
                       style={{
-                        width: 40, height: 40,
+                        flex: 1,
+                        minHeight: 0,
+                        width: '100%',
+                        objectFit: 'contain',
                         imageRendering: 'pixelated',
                         display: 'block',
                         filter: discovered ? 'none' : 'brightness(0) saturate(0) opacity(0.18)',
                       }}
                     />
                     <span style={{
+                      flexShrink: 0,
                       fontFamily: 'monospace',
                       fontSize: 8,
                       color: discovered ? '#cbd5e1' : '#1e293b',
