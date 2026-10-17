@@ -155,12 +155,13 @@ function ProjectEntry({ project }: { project: Project }) {
               href={project.liveHref}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`Visit ${project.title} live site (opens in new tab)`}
               whileHover={{ scale: 1.25, y: -1, color: "#ffffff" }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
               style={{ color: "var(--accent)", flexShrink: 0, display: "flex", touchAction: "manipulation" }}
             >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M2 12L12 2M12 2H6M12 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </motion.a>

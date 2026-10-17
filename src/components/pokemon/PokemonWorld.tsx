@@ -576,10 +576,10 @@ export default function PokemonWorld() {
           {/* ── Center content (above all sprites) ── */}
           <div style={{ position: "relative", zIndex: 5, display: "flex", flexDirection: "column", alignItems: "center" }}>
             <p style={{ color: "#ffcc00", fontSize: "8px", letterSpacing: "7px", marginBottom: "18px", animation: "pfu .7s .2s ease both" }}>WELCOME TO</p>
-            <h1 style={{ color: "#fff", fontSize: "clamp(18px,3.2vw,40px)", textAlign: "center", lineHeight: 1.6, textShadow: "4px 4px 0 #aa1100,7px 7px 0 #660000", animation: "pfu .7s .5s ease both", margin: 0 }}>
+            <h2 style={{ color: "#fff", fontSize: "clamp(18px,3.2vw,40px)", textAlign: "center", lineHeight: 1.6, textShadow: "4px 4px 0 #aa1100,7px 7px 0 #660000", animation: "pfu .7s .5s ease both", margin: 0 }}>
               VARUUN&apos;S<br />
               <span style={{ color: "#ffcc00", textShadow: "4px 4px 0 #997700,7px 7px 0 #554400" }}>POKè WORLD</span>
-            </h1>
+            </h2>
             <p style={{ color: "#555", fontSize: "7px", letterSpacing: "3px", marginTop: "14px", animation: "pfu .7s .8s ease both" }}>✦ &nbsp; PORTFOLIO EDITION &nbsp; ✦</p>
             <div style={{ margin: "26px auto", animation: "pfu .7s 1s ease both" }}>
               <div style={{ width: "68px", height: "68px", borderRadius: "50%", border: "4px solid #1a1a1a", position: "relative", overflow: "hidden", animation: "pbspin 5s linear infinite" }}>
