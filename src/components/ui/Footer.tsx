@@ -23,7 +23,7 @@ export default function Footer() {
           transition={{ duration: 0.45, delay: 0.1, ease: [0, 0, 0.2, 1] }}
           style={{ display: "inline-block" }}
         >
-          <Image src="/logo.png" alt="VR Logo" width={36} height={36} style={{ height: "36px", width: "auto", opacity: 0.75 }} />
+          <Image src="/logo.png" alt="VR Logo" width={37} height={36} style={{ opacity: 0.75 }} />
         </motion.a>
         <motion.p
           className="text-sm"

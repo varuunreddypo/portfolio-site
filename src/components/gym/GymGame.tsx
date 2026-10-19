@@ -24,6 +24,7 @@ import StoneQuizModal from './StoneQuizModal';
 import StoneProgress from './StoneProgress';
 
 const TILE = 48;
+const SAFE_STEPS = 1; // no wild encounter on the first step of each visit
 
 const ALL_POKEMON = [
   { id: 10,  name: 'Caterpie'   },
@@ -165,6 +166,9 @@ export default function GymGame() {
   const [state, dispatch] = useReducer(reducer, INIT);
   const [isMoving, setIsMoving] = useState(false);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Encounters only roll after a real step, and never during the first few steps of a visit
+  const justMovedRef = useRef(false);
+  const visitStepsRef = useRef(0);
   const [showHelp, setShowHelp] = useState(false);
   const [showBattleModal, setShowBattleModal] = useState(false);
   const [demoActive, setDemoActive] = useState(false);
@@ -175,6 +179,9 @@ export default function GymGame() {
   const demoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gameRef = useRef<HTMLDivElement>(null);
   const mapImgRef = useRef<HTMLImageElement>(null);
+  const mapColRef = useRef<HTMLDivElement>(null);
+  const controlsRef = useRef<HTMLDivElement>(null);
+  const [mapMaxH, setMapMaxH] = useState<number | undefined>(undefined);
   const stateRef = useRef(state);
   stateRef.current = state;
   const starterRef = useRef(starter);
@@ -218,6 +225,23 @@ export default function GymGame() {
     update();
     return () => obs.disconnect();
   }, []);
+
+  // Cap map height to the space left above the controls so it scales to fit
+  // whichever dimension runs out first (no gap on tall screens, no clipping on short ones)
+  useEffect(() => {
+    const col = mapColRef.current;
+    const controls = controlsRef.current;
+    if (!col || !controls) return;
+    const update = () => {
+      const gap = parseFloat(getComputedStyle(col).rowGap) || 0;
+      setMapMaxH(Math.max(120, col.clientHeight - controls.offsetHeight - gap));
+    };
+    const obs = new ResizeObserver(update);
+    obs.observe(col);
+    obs.observe(controls);
+    update();
+    return () => obs.disconnect();
+  }, [showStarterPick]);
 
   const handleImgLoad = useCallback(() => {
     const img = mapImgRef.current;
@@ -264,11 +288,16 @@ export default function GymGame() {
       return;
     }
     if (!isWalkable(nextRow, nextCol)) { dispatch({ type: 'BUMP', dir }); return; }
+    justMovedRef.current = true;
+    visitStepsRef.current += 1;
     dispatch({ type: 'MOVE', dir, nextRow, nextCol });
   }, [state.row, state.col]);
 
   useEffect(() => {
+    if (!justMovedRef.current) return;
+    justMovedRef.current = false;
     if (inBattle.current) return;
+    if (visitStepsRef.current <= SAFE_STEPS) return;
     const t = setTimeout(() => {
       const s = stateRef.current;
       const biome = getBiome(s.row, s.col);
@@ -387,7 +416,7 @@ export default function GymGame() {
       }}>
 
         {/* ── LEFT SIDEBAR ── */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minHeight: 0, overflow: 'hidden' }}>
+        <div className="gym-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: 8, minHeight: 0, overflowY: 'auto', overflowX: 'hidden', paddingRight: 4, scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.15) transparent' }}>
 
           {/* Title */}
           <div style={{ flexShrink: 0 }}>
@@ -463,11 +492,11 @@ export default function GymGame() {
           </div>
 
           {/* Pokédex 3×3 grid */}
-          <div style={{ ...PANEL, flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ ...PANEL, flex: '1 0 auto', display: 'flex', flexDirection: 'column' }}>
             <p style={{ margin: '0 0 6px', fontFamily: 'monospace', fontSize: 10, color: '#475569', textTransform: 'uppercase', letterSpacing: 1, flexShrink: 0 }}>
               Pokédex {state.seen.length > 0 && `· ${state.seen.length}/9`}
             </p>
-            <div style={{ flex: 1, minHeight: 0, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(3, 1fr)', gap: 4 }}>
+            <div style={{ flex: 1, minHeight: 0, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(3, minmax(62px, 1fr))', gap: 4 }}>
               {ALL_POKEMON.map(pkmn => {
                 const discovered = state.seen.includes(pkmn.name);
                 const backSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pkmn.id}.png`;
@@ -543,10 +572,10 @@ export default function GymGame() {
         </div>
 
         {/* ── MAP + CONTROLS ── */}
-        <div className="gym-map-col" style={{ display: 'flex', flexDirection: 'column', gap: 16, minHeight: 0, overflow: 'hidden' }}>
+        <div ref={mapColRef} className="gym-map-col" style={{ display: 'flex', flexDirection: 'column', gap: 16, minHeight: 0, overflow: 'hidden' }}>
 
           {/* Map */}
-          <div style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
+          <div style={{ flexShrink: 0, display: 'flex', justifyContent: 'center' }}>
             <div
               ref={gameRef}
               role="application"
@@ -567,7 +596,7 @@ export default function GymGame() {
                 src="/Varuun Pokemon Gym.png"
                 alt="Pokémon Gym map"
                 onLoad={handleImgLoad}
-                style={{ display: 'block', maxWidth: '100%', imageRendering: 'pixelated' }}
+                style={{ display: 'block', maxWidth: '100%', maxHeight: mapMaxH, imageRendering: 'pixelated' }}
                 draggable={false}
               />
 
@@ -717,8 +746,12 @@ export default function GymGame() {
           </div>
 
           {/* Controls panel */}
-          <div style={{
+          <div ref={controlsRef} style={{
             flexShrink: 0,
+            alignSelf: 'center',
+            width: tileW * MAP_COLS,
+            maxWidth: '100%',
+            boxSizing: 'border-box',
             minHeight: 150,
             display: 'flex',
             flexDirection: 'column',

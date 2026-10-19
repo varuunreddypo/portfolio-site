@@ -78,11 +78,25 @@ export default function Navbar() {
             transition={{ type: "spring", stiffness: 400, damping: 22 }}
             style={{ display: "flex", alignItems: "center", touchAction: "manipulation" }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo.png"
-              alt="VR"
-              style={{ height: "48px", width: "auto", display: "block", filter: isPokeworldDark ? "brightness(1) invert(1)" : "brightness(0.6)" }}
+            {/* Logo PNG used as a mask so it can be tinted to match the Resume button on dark backgrounds */}
+            <span
+              role="img"
+              aria-label="VR"
+              style={{
+                display: "block",
+                height: 48,
+                width: 49,
+                backgroundColor: isDesignerLight ? "#606060" : ctaColor,
+                WebkitMaskImage: "url(/logo.png)",
+                maskImage: "url(/logo.png)",
+                WebkitMaskSize: "contain",
+                maskSize: "contain",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskPosition: "center",
+                maskPosition: "center",
+                transition: "background-color 300ms ease",
+              }}
             />
           </motion.a>
 

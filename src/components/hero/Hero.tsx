@@ -211,6 +211,35 @@ export default function Hero() {
         @media (max-width:720px) {
           .hero-main-row { gap:32px; flex-direction:column; }
         }
+        .hero-status {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin: 20px 0 0;
+          font-family: "Press Start 2P", monospace;
+          font-size: 9px;
+          letter-spacing: 0.06em;
+          line-height: 1;
+          white-space: nowrap;
+          animation: textFadeIn 400ms ease-out backwards;
+          transition: color 700ms ease;
+        }
+        .hero-status-dot {
+          position: relative;
+          width: 7px; height: 7px;
+          background: #22c55e;
+          flex-shrink: 0;
+        }
+        .hero-status-dot::after {
+          content: "";
+          position: absolute; inset: 0;
+          background: #22c55e;
+          animation: heroStatusPing 1.8s cubic-bezier(0,0,0.2,1) infinite;
+        }
+        @keyframes heroStatusPing {
+          0%   { transform: scale(1);   opacity: 0.7; }
+          80%, 100% { transform: scale(2.6); opacity: 0; }
+        }
         .hero-big-title {
           font-family: var(--font-montserrat);
           font-weight: 900;
@@ -277,9 +306,11 @@ export default function Hero() {
           .hero-content-main { padding-top: 76px !important; padding-bottom: 16px !important; }
           .hero-main-row { gap: 16px !important; }
           .hero-tagline { margin-bottom: 16px !important; }
+          .hero-status { font-size: 7px; margin-top: 14px; }
         }
         @media (prefers-reduced-motion: reduce) {
-          .hero-headline, .hero-tagline { animation: none; }
+          .hero-headline, .hero-tagline, .hero-status { animation: none; }
+          .hero-status-dot::after { animation: none; }
         }
       `}</style>
 
@@ -495,6 +526,21 @@ export default function Hero() {
                 </button>
               ))}
             </div>
+
+            {/* Current role */}
+            <p
+              className="hero-status"
+              style={{ color: textColor }}
+            >
+              <span className="hero-status-dot" aria-hidden="true" />
+              <span style={{ color: mutedColor, transition:"color 700ms ease" }}>
+                {isPoke ? "NOW TRAINING @" : "CURRENTLY @"}
+              </span>
+              <svg viewBox="0 0 30 26" width="13" height="11" aria-hidden="true" style={{ flexShrink:0 }}>
+                <path fill="#FA0F00" d="M11.5 0H0v26zM18.5 0H30v26zM15 9.6l7.2 16.4h-4.7l-2.1-5.3h-5.3z" />
+              </svg>
+              ADOBE
+            </p>
           </div>
 
         </div>

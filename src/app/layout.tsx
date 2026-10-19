@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Press_Start_2P, VT323, Montserrat, Caveat, Space_Mono, Outfit, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const pressStart2P = Press_Start_2P({
@@ -72,6 +73,13 @@ export default function RootLayout({
       className={`${pressStart2P.variable} ${vt323.variable} ${montserrat.variable} ${caveat.variable} ${spaceMono.variable} ${outfit.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>{children}</body>
+      <Script id="clarity-analytics" strategy="afterInteractive">{`
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xbph1yq6pj");
+      `}</Script>
     </html>
   );
 }
