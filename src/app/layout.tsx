@@ -50,15 +50,31 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.varuunreddy.design"),
   icons: { icon: "/logo.png" },
   title: "Varuun Reddy — Product Designer",
   description:
     "Product Designer with experience across B2B, healthcare, EdTech, EV, Utility, and Retail. Based in Dallas, TX.",
   openGraph: {
-    title: "Varuun Reddy — Product Designer",
-    description:
-      "Product Designer crafting scalable, human-centered digital experiences.",
+    title: "Varuun Reddy | Product Designer",
+    description: "Explore my UX, product design, and research projects.",
+    url: "/",
+    siteName: "Varuun Reddy",
     type: "website",
+    images: [
+      {
+        url: "/og-preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Varuun Reddy — Product Designer portfolio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Varuun Reddy | Product Designer",
+    description: "Explore my UX, product design, and research projects.",
+    images: ["/og-preview.png"],
   },
 };
 

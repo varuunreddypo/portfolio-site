@@ -211,7 +211,7 @@ export const PokedexBoot: React.FC = () => {
               {[
                 { label: 'LOCATION',   val: 'DALLAS, TX',    op: rowOp(88)  },
                 { label: 'EXPERIENCE', val: '7 YEARS',        op: rowOp(96)  },
-                { label: 'STATUS',     val: 'OPEN TO WORK',   op: rowOp(104) },
+                { label: 'STATUS',     val: 'AT ADOBE',       op: rowOp(104) },
               ].map(({ label, val, op }) => (
                 <div key={label} style={{
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
