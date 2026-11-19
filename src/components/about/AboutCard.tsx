@@ -291,7 +291,7 @@ export default function AboutCard() {
         }
         .evolution-row {
           display: grid;
-          grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+          grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
           align-items: start;
           gap: 4px;
         }
@@ -343,7 +343,7 @@ export default function AboutCard() {
         }
         @media (max-width: 480px) {
           .evolution-chain { padding: 12px 14px; }
-          .evolution-row   { gap: 2px; }
+          .evolution-row   { gap: 0; }
           .evo-stage-name  { font-size: 8px; min-height: 2.8em; }
           .evo-stage-year  { font-size: 7px; }
           .evo-arrow       { font-size: 8px; min-height: 2.8em; }
@@ -590,17 +590,22 @@ export default function AboutCard() {
                     <div className="evo-arrow" aria-hidden="true">▶</div>
                     <div className="evo-stage past">
                       <div className="evo-stage-name">UX Designer</div>
-                      <div className="evo-stage-year">2019–22</div>
+                      <div className="evo-stage-year">2020–22</div>
                     </div>
                     <div className="evo-arrow" aria-hidden="true">▶</div>
                     <div className="evo-stage past">
                       <div className="evo-stage-name">Lead Product Designer</div>
-                      <div className="evo-stage-year">2022–24</div>
+                      <div className="evo-stage-year">2023–24</div>
+                    </div>
+                    <div className="evo-arrow" aria-hidden="true">▶</div>
+                    <div className="evo-stage past">
+                      <div className="evo-stage-name">UX Engineer</div>
+                      <div className="evo-stage-year">2024–26</div>
                     </div>
                     <div className="evo-arrow" aria-hidden="true">▶</div>
                     <div className="evo-stage current" aria-current="true">
-                      <div className="evo-stage-name">UX Engineer</div>
-                      <div className="evo-stage-year">NOW</div>
+                      <div className="evo-stage-name">Product Designer</div>
+                      <div className="evo-stage-year" style={{ textAlign: "center" }}>NOW<br />@ ADOBE</div>
                     </div>
                   </div>
                 </section>
